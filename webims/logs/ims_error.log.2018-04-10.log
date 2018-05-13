@@ -1,8 +1,0 @@
-2018-04-10 00:23:16 ERROR [Class:c.a.d.f.FilterManager->Thread:main] load filter error, filter not found : logback 
-2018-04-10 00:40:07 ERROR [Class:c.a.d.f.FilterManager->Thread:main] load filter error, filter not found : logback 
-2018-04-10 00:42:50 ERROR [Class:c.a.d.f.FilterManager->Thread:main] load filter error, filter not found : logback 
-2018-04-10 00:45:40 ERROR [Class:c.a.d.f.FilterManager->Thread:main] load filter error, filter not found : logback 
-2018-04-10 00:47:38 ERROR [Class:c.a.d.f.FilterManager->Thread:main] load filter error, filter not found : logback 
-2018-04-10 00:48:44 ERROR [Class:c.a.d.f.FilterManager->Thread:main] load filter error, filter not found : logback 
-2018-04-10 00:49:56 ERROR [Class:c.a.d.f.FilterManager->Thread:main] load filter error, filter not found : logback 
-2018-04-10 00:50:58 ERROR [Class:c.a.d.f.FilterManager->Thread:main] load filter error, filter not found : logback 
