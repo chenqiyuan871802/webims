@@ -1,1 +1,0 @@
-var ${field}Store=[#set($size = $codeList.size())#foreach($code in $codeList)['${code.dictCode}', '${code.dictValue}']#if($velocityCount != $size) ,#end#end]
