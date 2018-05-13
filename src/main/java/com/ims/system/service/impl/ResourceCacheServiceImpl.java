@@ -3,6 +3,7 @@ package com.ims.system.service.impl;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -175,7 +176,7 @@ public class ResourceCacheServiceImpl implements ResourceCacheService {
 			}
 			if (IMSUtil.isNotEmpty(cacheMap)) {
 				Jedis jedis = jedisHelper.getJedisClient();
-				jedis.del(SystemCons.CACHE_PREFIX.PARAM);//先清空在插入
+				flushParam() ;//先清空在插入
 				jedis.hmset(SystemCons.CACHE_PREFIX.PARAM, cacheMap);
 				jedisHelper.close(jedis);
 			}
@@ -188,7 +189,11 @@ public class ResourceCacheServiceImpl implements ResourceCacheService {
 	public void flushParam() {
 		if(jedisHelper.isLive()){  //redis在线
 			Jedis jedis = jedisHelper.getJedisClient();
-			jedis.del(SystemCons.CACHE_PREFIX.PARAM);
+			Set<String> keySet=jedis.keys(SystemCons.CACHE_PREFIX.PARAM+"*");
+			for(String key:keySet){
+				jedis.del(key);
+			}
+			
 			jedisHelper.close(jedis);
 		}
 
@@ -327,7 +332,7 @@ public class ResourceCacheServiceImpl implements ResourceCacheService {
 	public void cacheAllDict() {
 		if(jedisHelper.isLive()){
 			Jedis jedis =jedisHelper.getJedisClient();
-			jedis.del(SystemCons.CACHE_PREFIX.DICT);
+			flushDict();//先清空，在缓存
 			List<DictIndex> dictIndexList=dictIndexMapper.list(null);
 			Map<String,Object> paramMap=new HashMap<String,Object>();
 			paramMap.put("status", SystemCons.ENABLED_YES);
@@ -375,7 +380,11 @@ public class ResourceCacheServiceImpl implements ResourceCacheService {
 	public void flushDict() {
 		if(jedisHelper.isLive()){  //redis在线
 			Jedis jedis = jedisHelper.getJedisClient();
-			jedis.del(SystemCons.CACHE_PREFIX.DICT);
+		    Set<String> keySet= jedis.keys(SystemCons.CACHE_PREFIX.DICT+"*");
+		    for(String key:keySet){
+		    	jedis.del(key);
+		    }
+			
 			jedisHelper.close(jedis);
 		}
 	}

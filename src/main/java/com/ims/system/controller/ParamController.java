@@ -3,15 +3,24 @@ package com.ims.system.controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
+
+import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.ims.common.matatype.Dto;
 import com.ims.common.matatype.Dtos;
 import com.ims.common.util.IMSFormater;
+import com.ims.common.util.IMSUtil;
 import com.ims.common.util.PageDto;
 import com.ims.common.util.R;
+import com.ims.common.util.SqlHelpUtil;
+
 import java.util.List;
+
+import com.ims.system.constant.SystemCons;
 import com.ims.system.model.Param;
 import com.ims.system.service.ParamService;
+import com.ims.system.util.CacheCxt;
+
 import org.springframework.stereotype.Controller;
 import com.ims.common.web.BaseController;
 
@@ -55,6 +64,7 @@ public class ParamController extends BaseController {
 	@ResponseBody
 	public PageDto list() {
 		Dto pDto = Dtos.newDto(request);
+		pDto.setOrder("create_time DESC");
 		Page<Param> page =paramService.likePage(pDto);
 		return new PageDto(page);
 	}
@@ -70,7 +80,7 @@ public class ParamController extends BaseController {
 	@GetMapping("add")
 	public String add() {
 
-		return prefix + "addparam";
+		return prefix + "addParam";
 	}
 
 	/**
@@ -84,8 +94,17 @@ public class ParamController extends BaseController {
 	@PostMapping("save")
 	@ResponseBody
 	public R save(Param param) {
+		EntityWrapper<Param> countWrapper = new EntityWrapper<Param>();
+		SqlHelpUtil.eq(countWrapper, "param_key", param.getParamKey());
+		int count=paramService.selectCount(countWrapper);
+		if(count>0){
+			return R.warn("参数键已被占用，请修改其它参数键再保存。");
+		}
+		param.setCreateTime(IMSUtil.getDateTime());
+		param.setUpdateTime(IMSUtil.getDateTime());
 		boolean result = paramService.insert(param);
 		if (result) {
+			CacheCxt.cacheParam(param.getParamKey());
 			return R.ok();
 		} else {
 			return R.error("保存失败");
@@ -103,8 +122,8 @@ public class ParamController extends BaseController {
 	@GetMapping("edit")
 	public String edit(String id,Model model) {
 		Param param=paramService.selectById(id);
-		model.addAttribute("param", param);
-		return prefix + "editparam";
+		model.addAttribute("paramModel", param);
+		return prefix + "editParam";
 	}
 	
 	/**
@@ -117,9 +136,20 @@ public class ParamController extends BaseController {
 	 */
 	@PostMapping("update")
 	@ResponseBody
-	public R update(Param param) {
+	public R update(Param param,String oldParamKey) {
+		if(!oldParamKey.equals(param.getParamKey())){
+			EntityWrapper<Param> countWrapper = new EntityWrapper<Param>();
+			SqlHelpUtil.eq(countWrapper, "param_key", param.getParamKey());
+			int count=paramService.selectCount(countWrapper);
+			if(count>0){
+				return R.warn("参数键已被占用，请修改其它参数键再保存。");
+			}
+			CacheCxt.removeCacheParam(oldParamKey);
+		}
+		param.setUpdateTime(IMSUtil.getDateTime());
 		boolean result = paramService.updateById(param);
 		if (result) {
+			CacheCxt.cacheParam(param.getParamKey());
 			return R.ok();
 		} else {
 			return R.error("更新失败");
@@ -152,8 +182,14 @@ public class ParamController extends BaseController {
 	@PostMapping("remove")
 	@ResponseBody
 	public R remove(String id) {
+		Param param=paramService.selectById(id);
+		if(SystemCons.EDITMODE_READ.equals(param.getEditMode())	){
+			
+			return R.warn("当前删除的键值参数数据为只读，只读的数据不能修改和删除");
+		}
 		boolean result = paramService.deleteById(id);
 		if (result) {
+			CacheCxt.removeCacheParam(param.getParamKey());
 			return R.ok();
 		} else {
 			return R.error("删除失败");
@@ -180,6 +216,38 @@ public class ParamController extends BaseController {
 			return R.error("删除失败");
 		}
 		
+	}
+	
+	/**
+	 * 
+	 * 简要说明：刷新键值参数缓存
+	 * 编写者：陈骑元
+	 * 创建时间：2018年5月13日 下午11:09:04
+	 * @param 说明
+	 * @return 说明
+	 */
+	@PostMapping("refreshParam")
+	@ResponseBody
+	public R refreshParam() {
+		CacheCxt.cacheAllParam();
+	    
+		return R.ok("刷新键值参数缓存操作成功");
+	}
+	/**
+	 * 
+	 * 简要说明：清空键值参数缓存
+	 * 编写者：陈骑元
+	 * 创建时间：2018年5月13日 下午11:09:04
+	 * @param 说明
+	 * @return 说明
+	 */
+	@PostMapping("flushParam")
+	@ResponseBody
+	public R flushParam() {
+		
+		CacheCxt.flushParam();
+		
+		return R.ok("清空键值参数缓存操作成功");
 	}
 	
 }

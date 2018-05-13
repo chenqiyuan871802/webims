@@ -409,7 +409,7 @@ function batchRemoveGridData(gridId,rowKey,url,warnMsg,confirmMsg,callback){
 					             }else {
  									$.messager.alert('错误信息',data.appmsg, 'error');
  								}
- 								if(callback && typeof(callback) === "function"){
+ 								if(typeof(callback) === "function"){
   							       
 							          callback(data);
 							    }
@@ -482,7 +482,7 @@ function batchRemoveGridData(gridId,rowKey,url,warnMsg,confirmMsg,callback){
 					              }else {
  									$.messager.alert('错误信息',data.appmsg, 'error');
  								}
- 								if(callback && typeof(callback) === "function"){
+ 								if(typeof(callback) === "function"){
   							       
 							          callback(data);
 							    }
@@ -513,7 +513,7 @@ function batchRemoveGridData(gridId,rowKey,url,warnMsg,confirmMsg,callback){
 					          }else {
  									$.messager.alert('错误信息',data.appmsg, 'error');
  								}
- 								if(callback && typeof(callback) === "function"){
+ 								if( typeof(callback) === "function"){
   							       
 							          callback(data);
 							    }
@@ -597,7 +597,7 @@ function batchRemoveGridData(gridId,rowKey,url,warnMsg,confirmMsg,callback){
  				} else {
  					$.messager.alert('错误信息', data.appmsg, 'error');
  				}
- 				if(callback && typeof(callback) === "function"){
+ 				if( typeof(callback) === "function"){
 				       
 			          callback(data);
 			    }
@@ -610,5 +610,101 @@ function batchRemoveGridData(gridId,rowKey,url,warnMsg,confirmMsg,callback){
  			$.messager.alert('错误信息', '操作失败', 'error');
  		}
  	});
+ 	
+
+ }
+ 
+ /**
+  * ajax接口
+  * @param url
+  * @param paramData
+  * @param confirmMsg
+  */
+ function doAjax(url, paramData, confirmMsg,gridId,callback) {
+ 	if (IMSUtils.isEmpty(url)) {
+ 		$.messager.alert('错误信息', '缺少URL地址', 'error');
+ 		return;
+ 	}
+ 	if (IMSUtils.isNotEmpty(confirmMsg)) {
+ 		$.messager.confirm('确认', confirmMsg, function(r) {
+ 			if (r) {
+ 				$.messager.progress({
+ 					title : '信息操作',
+ 					text : '数据正在保存中，请耐心等待...'
+ 				});
+ 				$.ajax({
+ 					type : 'post',
+ 					url : url,
+ 					data : paramData,
+ 					dataType : 'json',
+ 					success : function(data) {
+ 						$.messager.progress('close');
+ 						if (data) {
+ 							if (data.appcode == "1") {
+ 								showMsg('提示', data.appmsg);
+ 								if (IMSUtils.isNotEmpty(gridId)) {
+
+ 									$('#' + gridId).datagrid({});
+ 								}
+
+ 							} else if (data.appcode == "0") {
+ 								$.messager
+ 										.alert('警告信息', data.appmsg, 'warning');
+ 							} else {
+ 								$.messager.alert('错误信息', data.appmsg, 'error');
+ 							}
+ 							if( typeof(callback) === "function"){
+ 						       
+ 						          callback(data);
+ 						    }
+ 						} else {
+ 							$.messager.alert('错误信息', '操作失败', 'error');
+ 						}
+ 					},
+ 					error : function() {
+ 						$.messager.progress('close');
+ 						$.messager.alert('错误信息', '操作失败，网络连接超时', 'error');
+ 					}
+ 				})
+ 			}
+ 		});
+ 	} else {
+ 		$.messager.progress({
+ 			title : '信息操作',
+ 			text : '数据正在保存中，请耐心等待...'
+ 		});
+ 		$.ajax({
+ 			type : 'post',
+ 			url : url,
+ 			data : paramData,
+ 			dataType : 'json',
+ 			success : function(data) {
+ 				$.messager.progress('close');
+ 				if (data) {
+ 					if (data.appcode == "1") {
+ 						showMsg('提示', data.appmsg);
+ 						if (IMSUtils.isNotEmpty(gridId)) {
+
+ 							$('#' + gridId).datagrid({});
+ 						}
+ 					} else if (data.appcode == "0") {
+ 						$.messager.alert('警告信息', data.appmsg, 'warning');
+ 					} else {
+ 						$.messager.alert('错误信息', data.appmsg, 'error');
+ 					}
+ 					if( typeof(callback) === "function"){
+ 				       
+ 				          callback(data);
+ 				    }
+ 				} else {
+ 					$.messager.alert('错误信息', '操作失败', 'error');
+ 				}
+ 			},
+ 			error : function() {
+ 				$.messager.progress('close');
+ 				$.messager.alert('错误信息', '操作失败，网络连接超时', 'error');
+ 			}
+ 		})
+ 	}
 
  }

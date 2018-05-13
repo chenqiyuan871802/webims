@@ -29,6 +29,21 @@
 		}
 		
 	}
+  function editDict(){
+	  var row= $('#dictList').datagrid('getSelected');
+	   if(row!=null){
+	 		 var rowValue= row['editMode'];
+	 		 if(rowValue=='0'){
+	 			$.messager.alert('警告信息', '你当前选择字典对照数据为只读，只读数据不允许删除和修改', 'warning'); 
+	 		 }else{
+	 			editGridData('editDictWindow','dictList','dictId','${ctx}/system/dict/editDict','请选择你要编辑字典对照数据'); 
+	 		 }
+	 		
+	 	 }else{
+	 		$.messager.alert('警告信息', '请选择你要编辑字典对照数据', 'warning');
+	   }
+	  
+  }
 </script>
 </head>
 <body style="margin: 0; padding: 0">
@@ -166,6 +181,10 @@
 			onclick="editGridData('editDictIndexWindow','dictIndexList','dictIndexId','${ctx}/system/dict/editDictIndex','请选择你要编辑的字典数据');">编辑</a>
 		<a href="javascript:void(0);" class="easyui-linkbutton" iconCls="icon-remove"
 			plain="true" onclick="removeGridData('dictIndexList','dictIndexId','${ctx}/system/dict/removeDictIndex','请选择你要删除字典信息','你确认要删除选择的字典信息吗？','',clearDictCallback);">删除</a>
+		<a href="javascript:void(0);" class="easyui-linkbutton" iconCls="refresh"
+			plain="true" onclick="doAjax('${ctx}/system/dict/refreshDict','','你确定要重新刷新字典缓存吗？')">刷新缓存</a>
+		<a href="javascript:void(0);" class="easyui-linkbutton" iconCls="close"
+			plain="true" onclick="doAjax('${ctx}/system/dict/flushDict','','你确定清空字典缓存吗？')">清空缓存</a>
 
 	</div>
 	<div id="tb" style="padding: 2px;">
@@ -174,7 +193,7 @@
 			onclick="editGridData('addDictWindow','dictIndexList','dictIndexId','${ctx}/system/dict/addDict','请先在数据字典列表上选择一条字典数据');">新增</a>
 
 		<a href="javascript:void(0);" class="easyui-linkbutton"
-			iconCls="icon-edit" plain="true" onclick="editGridData('editDictWindow','dictList','dictId','${ctx}/system/dict/editDict','请选择你要编辑字典对照数据');">编辑</a>
+			iconCls="icon-edit" plain="true" onclick="editDict()">编辑</a>
 		<a href="javascript:void(0);" class="easyui-linkbutton" iconCls="icon-remove"
 			plain="true" onclick="batchRemoveGridData('dictList','dictId','${ctx}/system/dict/batchRemoveDict','请选择你要删除字典对照信息','你确认要删除选择的字典对照信息吗？');">删除</a>
 

@@ -362,6 +362,36 @@ public class DictController extends BaseController {
 		}
 		
 	}
-	
+	/**
+	 * 
+	 * 简要说明：刷新字典缓存
+	 * 编写者：陈骑元
+	 * 创建时间：2018年5月13日 下午11:09:04
+	 * @param 说明
+	 * @return 说明
+	 */
+	@PostMapping("refreshDict")
+	@ResponseBody
+	public R refreshDict() {
+		CacheCxt.cacheAllDict();
+	    
+		return R.ok("刷新字典缓存操作成功");
+	}
+	/**
+	 * 
+	 * 简要说明：清空字典缓存
+	 * 编写者：陈骑元
+	 * 创建时间：2018年5月13日 下午11:09:04
+	 * @param 说明
+	 * @return 说明
+	 */
+	@PostMapping("flushDict")
+	@ResponseBody
+	public R flushDict() {
+		
+		CacheCxt.flushDict();
+		
+		return R.ok("清空字典缓存操作成功");
+	}
 }
 

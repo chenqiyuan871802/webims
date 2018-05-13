@@ -24,43 +24,55 @@
     </sql>
 
 <!-- 根据Dto查询并返回数据持久化对象集合 -->
-	<select id="list" parameterType="Map" resultType="Param">
+	<select id="list" parameterType="Map" resultType="com.ims.system.model.Param">
 		SELECT
 			<include refid="Base_Column_List" />	
 		FROM sys_param
 		<where>
 		    <include refid="equal" />
-		</where>	
+		</where>
+		<if test="_order != null and _order != ''">
+		     ORDER BY ${_order}
+		</if>			
 	</select>
 
 	<!-- 根据Dto查询并返回分页数据持久化对象集合 -->
-	<select id="listPage" parameterType="Map" resultType="Param" useCache="false">
+	<select id="listPage" parameterType="Map" resultType="com.ims.system.model.Param" useCache="false">
 	    SELECT
 			<include refid="Base_Column_List" />	
 		FROM sys_param
 		<where>
 		    <include refid="equal" />
 		</where>	
+		<if test="_order != null and _order != ''">
+		     ORDER BY ${_order}
+		</if>		
 	</select>
 	
 	<!-- 根据Dto模糊查询并返回数据持久化对象集合(字符型字段模糊匹配，其余字段精确匹配) -->
-	<select id="like" parameterType="Map" resultType="Param">
+	<select id="like" parameterType="Map" resultType="com.ims.system.model.Param">
 		SELECT
 			<include refid="Base_Column_List" />	
 		FROM sys_param
 		<where>
 		    <include refid="like" />
-		</where>	
+		</where>
+		<if test="_order != null and _order != ''">
+		     ORDER BY ${_order}
+		</if>			
 	</select>
 
 	<!-- 根据Dto模糊查询并返回分页数据持久化对象集合(字符型字段模糊匹配，其余字段精确匹配) -->
-	<select id="likePage" parameterType="Map" resultType="Param" useCache="false">
+	<select id="likePage" parameterType="Map" resultType="com.ims.system.model.Param" useCache="false">
 	    SELECT
 			<include refid="Base_Column_List" />	
 		FROM sys_param
 		<where>
 		    <include refid="like" />
-		</where>	
+		</where>
+		<if test="_order != null and _order != ''">
+		     ORDER BY ${_order}
+		</if>			
 	</select>
 	
     <!-- Where精确匹配字段 -->
