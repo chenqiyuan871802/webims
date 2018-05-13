@@ -1,0 +1,4 @@
+2018-05-01 22:41:47 ERROR [Class:c.a.d.f.FilterManager->Thread:main] load filter error, filter not found : logback 
+2018-05-01 22:42:56 ERROR [Class:c.a.d.f.FilterManager->Thread:main] load filter error, filter not found : logback 
+2018-05-01 22:43:09 ERROR [Class:c.a.d.f.FilterManager->Thread:main] load filter error, filter not found : logback 
+2018-05-01 22:43:40 ERROR [Class:c.a.d.f.FilterManager->Thread:main] load filter error, filter not found : logback 

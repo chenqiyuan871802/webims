@@ -1,0 +1,54 @@
+2018-05-01 22:41:40 INFO [Class:o.s.b.StartupInfoLogger->Thread:main] Starting RedisTest on lanfeng with PID 4228 (started by 蓝枫 in D:\Tunanworkspace\webims) 
+2018-05-01 22:41:40 INFO [Class:o.s.b.SpringApplication->Thread:main] The following profiles are active: dev 
+2018-05-01 22:41:41 INFO [Class:o.h.v.i.u.Version->Thread:background-preinit] HV000001: Hibernate Validator 5.3.5.Final 
+2018-05-01 22:41:45 DEBUG [Class:o.a.i.l.LogFactory->Thread:main] Logging initialized using 'class org.apache.ibatis.logging.slf4j.Slf4jImpl' adapter. 
+2018-05-01 22:41:47 ERROR [Class:c.a.d.f.FilterManager->Thread:main] load filter error, filter not found : logback 
+2018-05-01 22:41:48 INFO [Class:c.a.d.p.DruidDataSource->Thread:main] {dataSource-1} inited 
+2018-05-01 22:41:49 DEBUG [Class:o.a.i.i.VFS->Thread:main] Using VFS adapter com.baomidou.mybatisplus.spring.boot.starter.SpringBootVFS 
+2018-05-01 22:41:49 DEBUG [Class:o.a.i.i.ResolverUtil->Thread:main] Checking to see if class com.ims.system.model.Dict matches criteria [is assignable to Object] 
+2018-05-01 22:41:49 DEBUG [Class:o.a.i.i.ResolverUtil->Thread:main] Checking to see if class com.ims.system.model.DictIndex matches criteria [is assignable to Object] 
+2018-05-01 22:41:49 DEBUG [Class:o.a.i.i.ResolverUtil->Thread:main] Checking to see if class com.ims.system.model.Param matches criteria [is assignable to Object] 
+2018-05-01 22:41:59 INFO [Class:o.s.b.StartupInfoLogger->Thread:main] Started RedisTest in 20.068 seconds (JVM running for 22.249) 
+2018-05-01 22:41:59 DEBUG [Class:o.a.i.l.j.BaseJdbcLogger->Thread:main] ==>  Preparing: SELECT param_id AS paramId,param_name AS paramName,param_key AS paramKey,param_value AS paramValue,param_remark AS paramRemark,param_type AS paramType,`status`,edit_mode AS editMode,create_time AS createTime,create_by AS createBy,update_time AS updateTime,update_by AS updateBy FROM sys_param WHERE param_key = ?  
+2018-05-01 22:42:00 DEBUG [Class:o.a.i.l.j.BaseJdbcLogger->Thread:main] ==> Parameters: sw(String) 
+2018-05-01 22:42:00 DEBUG [Class:o.a.i.l.j.BaseJdbcLogger->Thread:main] <==      Total: 0 
+2018-05-01 22:42:00 INFO [Class:c.a.d.p.DruidDataSource->Thread:Thread-5] {dataSource-1} closed 
+2018-05-01 22:42:51 INFO [Class:o.s.b.StartupInfoLogger->Thread:main] Starting RedisTest on lanfeng with PID 7308 (started by 蓝枫 in D:\Tunanworkspace\webims) 
+2018-05-01 22:42:51 INFO [Class:o.s.b.SpringApplication->Thread:main] The following profiles are active: dev 
+2018-05-01 22:42:51 INFO [Class:o.h.v.i.u.Version->Thread:background-preinit] HV000001: Hibernate Validator 5.3.5.Final 
+2018-05-01 22:42:54 DEBUG [Class:o.a.i.l.LogFactory->Thread:main] Logging initialized using 'class org.apache.ibatis.logging.slf4j.Slf4jImpl' adapter. 
+2018-05-01 22:42:56 ERROR [Class:c.a.d.f.FilterManager->Thread:main] load filter error, filter not found : logback 
+2018-05-01 22:42:57 INFO [Class:c.a.d.p.DruidDataSource->Thread:main] {dataSource-1} inited 
+2018-05-01 22:42:58 DEBUG [Class:o.a.i.i.VFS->Thread:main] Using VFS adapter com.baomidou.mybatisplus.spring.boot.starter.SpringBootVFS 
+2018-05-01 22:42:58 DEBUG [Class:o.a.i.i.ResolverUtil->Thread:main] Checking to see if class com.ims.system.model.Dict matches criteria [is assignable to Object] 
+2018-05-01 22:42:58 DEBUG [Class:o.a.i.i.ResolverUtil->Thread:main] Checking to see if class com.ims.system.model.DictIndex matches criteria [is assignable to Object] 
+2018-05-01 22:42:58 DEBUG [Class:o.a.i.i.ResolverUtil->Thread:main] Checking to see if class com.ims.system.model.Param matches criteria [is assignable to Object] 
+2018-05-01 22:43:04 INFO [Class:o.h.v.i.u.Version->Thread:background-preinit] HV000001: Hibernate Validator 5.3.5.Final 
+2018-05-01 22:43:04 INFO [Class:o.s.b.StartupInfoLogger->Thread:main] Starting RedisTest on lanfeng with PID 8032 (started by 蓝枫 in D:\Tunanworkspace\webims) 
+2018-05-01 22:43:04 INFO [Class:o.s.b.SpringApplication->Thread:main] The following profiles are active: dev 
+2018-05-01 22:43:07 DEBUG [Class:o.a.i.l.LogFactory->Thread:main] Logging initialized using 'class org.apache.ibatis.logging.slf4j.Slf4jImpl' adapter. 
+2018-05-01 22:43:09 ERROR [Class:c.a.d.f.FilterManager->Thread:main] load filter error, filter not found : logback 
+2018-05-01 22:43:09 INFO [Class:c.a.d.p.DruidDataSource->Thread:main] {dataSource-1} inited 
+2018-05-01 22:43:10 DEBUG [Class:o.a.i.i.VFS->Thread:main] Using VFS adapter com.baomidou.mybatisplus.spring.boot.starter.SpringBootVFS 
+2018-05-01 22:43:10 DEBUG [Class:o.a.i.i.ResolverUtil->Thread:main] Checking to see if class com.ims.system.model.Dict matches criteria [is assignable to Object] 
+2018-05-01 22:43:10 DEBUG [Class:o.a.i.i.ResolverUtil->Thread:main] Checking to see if class com.ims.system.model.DictIndex matches criteria [is assignable to Object] 
+2018-05-01 22:43:10 DEBUG [Class:o.a.i.i.ResolverUtil->Thread:main] Checking to see if class com.ims.system.model.Param matches criteria [is assignable to Object] 
+2018-05-01 22:43:15 INFO [Class:o.s.b.StartupInfoLogger->Thread:main] Started RedisTest in 11.952 seconds (JVM running for 13.012) 
+2018-05-01 22:43:15 DEBUG [Class:o.a.i.l.j.BaseJdbcLogger->Thread:main] ==>  Preparing: SELECT param_id AS paramId,param_name AS paramName,param_key AS paramKey,param_value AS paramValue,param_remark AS paramRemark,param_type AS paramType,`status`,edit_mode AS editMode,create_time AS createTime,create_by AS createBy,update_time AS updateTime,update_by AS updateBy FROM sys_param WHERE param_key = ?  
+2018-05-01 22:43:16 DEBUG [Class:o.a.i.l.j.BaseJdbcLogger->Thread:main] ==> Parameters: order_ip(String) 
+2018-05-01 22:43:16 DEBUG [Class:o.a.i.l.j.BaseJdbcLogger->Thread:main] <==      Total: 1 
+2018-05-01 22:43:16 INFO [Class:c.a.d.p.DruidDataSource->Thread:Thread-5] {dataSource-1} closed 
+2018-05-01 22:43:35 INFO [Class:o.s.b.StartupInfoLogger->Thread:main] Starting RedisTest on lanfeng with PID 5172 (started by 蓝枫 in D:\Tunanworkspace\webims) 
+2018-05-01 22:43:35 INFO [Class:o.s.b.SpringApplication->Thread:main] The following profiles are active: dev 
+2018-05-01 22:43:37 INFO [Class:o.h.v.i.u.Version->Thread:background-preinit] HV000001: Hibernate Validator 5.3.5.Final 
+2018-05-01 22:43:38 DEBUG [Class:o.a.i.l.LogFactory->Thread:main] Logging initialized using 'class org.apache.ibatis.logging.slf4j.Slf4jImpl' adapter. 
+2018-05-01 22:43:40 ERROR [Class:c.a.d.f.FilterManager->Thread:main] load filter error, filter not found : logback 
+2018-05-01 22:43:40 INFO [Class:c.a.d.p.DruidDataSource->Thread:main] {dataSource-1} inited 
+2018-05-01 22:43:41 DEBUG [Class:o.a.i.i.VFS->Thread:main] Using VFS adapter com.baomidou.mybatisplus.spring.boot.starter.SpringBootVFS 
+2018-05-01 22:43:41 DEBUG [Class:o.a.i.i.ResolverUtil->Thread:main] Checking to see if class com.ims.system.model.Dict matches criteria [is assignable to Object] 
+2018-05-01 22:43:41 DEBUG [Class:o.a.i.i.ResolverUtil->Thread:main] Checking to see if class com.ims.system.model.DictIndex matches criteria [is assignable to Object] 
+2018-05-01 22:43:41 DEBUG [Class:o.a.i.i.ResolverUtil->Thread:main] Checking to see if class com.ims.system.model.Param matches criteria [is assignable to Object] 
+2018-05-01 22:43:46 INFO [Class:o.s.b.StartupInfoLogger->Thread:main] Started RedisTest in 11.879 seconds (JVM running for 12.993) 
+2018-05-01 22:43:46 DEBUG [Class:o.a.i.l.j.BaseJdbcLogger->Thread:main] ==>  Preparing: SELECT param_id AS paramId,param_name AS paramName,param_key AS paramKey,param_value AS paramValue,param_remark AS paramRemark,param_type AS paramType,`status`,edit_mode AS editMode,create_time AS createTime,create_by AS createBy,update_time AS updateTime,update_by AS updateBy FROM sys_param WHERE paramkey = ?  
+2018-05-01 22:43:46 DEBUG [Class:o.a.i.l.j.BaseJdbcLogger->Thread:main] ==> Parameters: order_ip(String) 
+2018-05-01 22:43:47 INFO [Class:c.a.d.p.DruidDataSource->Thread:Thread-5] {dataSource-1} closed 
