@@ -1,6 +1,7 @@
 package com.ims.system.service;
 
 import com.ims.system.model.Dept;
+import com.ims.system.model.TreeModel;
 import com.baomidou.mybatisplus.service.IService;
 import java.util.List;
 import com.ims.common.matatype.Dto;
@@ -40,4 +41,13 @@ public interface DeptService extends IService<Dept> {
 	 * @return Page<Dept>
 	 */
 	Page<Dept> likePage(Dto pDto);
+	/**
+	 * 
+	 * 简要说明：加载树模型
+	 * 编写者：陈骑元
+	 * 创建时间：2018年9月16日 下午7:56:09
+	 * @param 说明
+	 * @return 说明
+	 */
+	TreeModel loadDeptTree(Dto pDto);
 }

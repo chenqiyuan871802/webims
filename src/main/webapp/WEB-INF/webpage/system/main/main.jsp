@@ -717,7 +717,7 @@
 						"F_EnCode" : "CodeRule",
 						"F_FullName" : "单据编码",
 						"F_Icon" : "fa fa-barcode",
-						"F_UrlAddress" : "/SystemManage/CodeRule/Index",
+						"F_UrlAddress" : "/system/dept/init",
 						"F_Target" : "iframe",
 						"F_IsMenu" : 1,
 						"F_AllowExpand" : 1,
