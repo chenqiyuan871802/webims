@@ -80,7 +80,15 @@
 		     ORDER BY ${_order}
 		</if>			
 	</select>
-	
+	<!-- 根据数学表达式进行数学运算 -->
+	<select id="calc" parameterType="Map" resultType="String">
+		SELECT
+			${_expr}
+		FROM sys_dept
+		<where>
+		    <include refid="equal" />
+		</where>
+	</select>
     <!-- Where精确匹配字段 -->
     <sql id="equal">
         <if test="deptId != null and deptId != ''">

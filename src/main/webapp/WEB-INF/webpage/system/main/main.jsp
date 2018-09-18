@@ -165,7 +165,7 @@
 						"F_EnCode" : "OrganizeManage",
 						"F_FullName" : "机构管理",
 						"F_Icon" : "fa fa-sitemap",
-						"F_UrlAddress" : "/BaseManage/Organize/Index",
+						"F_UrlAddress" : "system/dept/init",
 						"F_Target" : "iframe",
 						"F_IsMenu" : 1,
 						"F_AllowExpand" : 1,

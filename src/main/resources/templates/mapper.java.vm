@@ -45,6 +45,14 @@ public interface ${table.mapperName} extends ${superMapperClass}<${entity}> {
 	 * @return List<${entity}>
 	 */
 	List<${entity}> likePage(Pagination page,Dto pDto);
+	
+	/**
+	 * 根据数学表达式进行数学运算
+	 * 
+	 * @param pDto
+	 * @return String
+	 */
+	 String calc(Dto pDto);
 
 
 }

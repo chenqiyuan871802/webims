@@ -72,5 +72,17 @@ public class ${table.serviceImplName} extends ${superServiceImplClass}<${table.m
 	    query.setRecords(baseMapper.likePage(query,pDto));
 	    return query;
 	};
+	/**
+	 * 根据数学表达式进行数学运算
+	 * 
+	 * @param pDto
+	 * @return String
+	 */
+	 @Override
+	 public String calc(Dto pDto){
+	 
+	     return baseMapper.calc(pDto);
+	 }
+	 
 }
 #end

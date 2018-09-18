@@ -42,6 +42,13 @@ public interface DeptService extends IService<Dept> {
 	 */
 	Page<Dept> likePage(Dto pDto);
 	/**
+	 * 根据数学表达式进行数学运算
+	 * 
+	 * @param pDto
+	 * @return String
+	 */
+	 String calc(Dto pDto);
+	/**
 	 * 
 	 * 简要说明：加载树模型
 	 * 编写者：陈骑元

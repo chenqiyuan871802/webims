@@ -1728,6 +1728,30 @@ public class IMSUtil {
     	  String returnStr=hour+":"+String.format("%02d", Integer.parseInt((remainMintue+"")));
     	  return returnStr;
     }
+    
+    /**
+	 * 生成树路径ID，如：01.01.01
+	 * 
+	 * @param curMaxNode
+	 *            本级当前最大节点ID，如果要生成本级第一个节点则传XX.XX.00(XX.XX为父节点ID)。
+	 * @param maxValue
+	 *            本级节点ID允许的最大值
+	 * @return
+	 */
+	public static String createCascadeId(String curMaxNode, int maxValue) {
+		String prefix = StringUtils.substringBeforeLast(curMaxNode, ".");
+		String last = StringUtils.substringAfterLast(curMaxNode, ".");
+		if (IMSUtil.isEmpty(last)) {
+			throw new RuntimeException("ID生成器生成节点ID参数错误");
+		}
+		int intLast = Integer.valueOf(last);
+		if (intLast == maxValue || intLast > maxValue) {
+			throw new RuntimeException("树ID生成器本级节点号源用尽");
+		}
+		String thisNode = String.valueOf(intLast + 1);
+		thisNode = StringUtils.leftPad(thisNode, String.valueOf(maxValue).length(), "0");
+		return prefix + "." + thisNode;
+	}
 	/**
 	 * 测试
 	 * 

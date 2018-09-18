@@ -43,5 +43,12 @@ public interface ${table.serviceName} extends ${superServiceClass}<${entity}> {
 	 * @return Page<${entity}>
 	 */
 	Page<${entity}> likePage(Dto pDto);
+	/**
+	 * 根据数学表达式进行数学运算
+	 * 
+	 * @param pDto
+	 * @return String
+	 */
+	 String calc(Dto pDto);
 }
 #end

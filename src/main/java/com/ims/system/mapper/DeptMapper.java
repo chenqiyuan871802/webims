@@ -12,7 +12,7 @@ import com.baomidou.mybatisplus.plugins.pagination.Pagination;
  * </p>
  *
  * @author 陈骑元
- * @since 2018-05-14
+ * @since 2018-09-18
  */
 public interface DeptMapper extends BaseMapper<Dept> {
 
@@ -42,6 +42,14 @@ public interface DeptMapper extends BaseMapper<Dept> {
 	 * @return List<Dept>
 	 */
 	List<Dept> likePage(Pagination page,Dto pDto);
+	
+	/**
+	 * 根据数学表达式进行数学运算
+	 * 
+	 * @param pDto
+	 * @return String
+	 */
+	 String calc(Dto pDto);
 
 
 }

@@ -45,7 +45,7 @@ public class ${table.controllerName} extends ${superControllerClass} {
 public class ${table.controllerName} {
 #end
 
-    private String prefix = "#if(${package.ModuleName})/${package.ModuleName}#end/#if(${controllerMappingHyphenStyle})${controllerMappingHyphen}#else${table.entityPath}#end"; 
+    private String prefix = "#if(${package.ModuleName})${package.ModuleName}#end/#if(${controllerMappingHyphenStyle})${controllerMappingHyphen}#else${table.entityPath}#end/"; 
     @Autowired
     private ${table.serviceName} ${table.entityPath}Service;
 	/**

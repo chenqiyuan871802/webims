@@ -4,13 +4,22 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import com.baomidou.mybatisplus.plugins.Page;
+import com.ims.common.constant.IMSCons;
 import com.ims.common.matatype.Dto;
 import com.ims.common.matatype.Dtos;
+import com.ims.common.util.IMSCxt;
 import com.ims.common.util.IMSFormater;
+import com.ims.common.util.IMSUtil;
+import com.ims.common.util.JsonUtil;
 import com.ims.common.util.PageDto;
 import com.ims.common.util.R;
 import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import com.ims.system.model.Dept;
+import com.ims.system.model.TreeModel;
 import com.ims.system.service.DeptService;
 import org.springframework.stereotype.Controller;
 import com.ims.common.web.BaseController;
@@ -27,7 +36,7 @@ import com.ims.common.web.BaseController;
 @RequestMapping("/system/dept")
 public class DeptController extends BaseController {
 
-    private String prefix = "/system/dept"; 
+    private String prefix = "system/dept/"; 
     @Autowired
     private DeptService deptService;
 	/**
@@ -43,7 +52,20 @@ public class DeptController extends BaseController {
 
 		return prefix + "deptList";
 	}
-
+	/**
+	 * 
+	 * 加载组织机构树
+	 * @param request
+	 * @param response
+	 */
+	@RequestMapping(value = "loadTree")
+	public void loadDeptTree(HttpServletRequest request, HttpServletResponse response) {
+		Dto pDto=Dtos.newDto(request);
+		TreeModel treeModel=deptService.loadDeptTree(pDto);
+		String outString ="["+JsonUtil.toJson(treeModel)+"]";
+		IMSCxt.write(response, outString);
+	}
+	
 	/**
 	 * 
 	 * 简要说明：分页查询 
@@ -56,6 +78,8 @@ public class DeptController extends BaseController {
 	@ResponseBody
 	public PageDto list() {
 		Dto pDto = Dtos.newDto(request);
+		pDto.put("is_del", IMSCons.IS.NO);
+		pDto.setOrder(" LENGTH(cascade_id) ASC,sort_no ASC ");
 		Page<Dept> page =deptService.likePage(pDto);
 		return new PageDto(page);
 	}
@@ -69,8 +93,8 @@ public class DeptController extends BaseController {
 	 * @return 说明
 	 */
 	@GetMapping("add")
-	public String add() {
-
+	public String add(String parentId,Model model) {
+		model.addAttribute("parentId", parentId);
 		return prefix + "addDept";
 	}
 
@@ -85,6 +109,22 @@ public class DeptController extends BaseController {
 	@PostMapping("save")
 	@ResponseBody
 	public R save(Dept dept) {
+		Dto calcDto = Dtos.newCalcDto("MAX(cascade_id)");
+		calcDto.put("parentId", dept.getParentId());
+		String maxCascadeId =deptService.calc(calcDto);
+		if(IMSUtil.isEmpty(maxCascadeId)){
+			Dept parentDept=deptService.selectById(dept.getParentId());
+			if(IMSUtil.isEmpty(parentDept)){
+					maxCascadeId="0.0000";
+			}else{
+				maxCascadeId=parentDept.getCascadeId()+".0000";
+			}
+				
+		}
+		String curCascadeId=IMSUtil.createCascadeId(maxCascadeId, 9999);
+		dept.setCascadeId(curCascadeId);
+		dept.setCreateTime(IMSUtil.getDateTime());
+		dept.setUpdateTime(IMSUtil.getDateTime());
 		boolean result = deptService.insert(dept);
 		if (result) {
 			return R.ok();

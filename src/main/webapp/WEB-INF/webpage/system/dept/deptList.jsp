@@ -1,5 +1,5 @@
 <%@ page contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
-<%@ include file="/WEB-INF/webpage/common/taglibs.jsp"%>
+<%@ include file="/WEB-INF/webpage/common/tagLibs.jsp"%>
 <head>
 <meta charset="UTF-8">
 <IMS:codeStore fields="edit_mode,status,is_auto_expand"/>
@@ -9,47 +9,24 @@
   function treeOnClickQuery(treeNode){
      
      $('#queryForm').form('reset');//重置查询框的值
-	 $('#cascade_id').val(treeNode.cascade_id);
+	 $('#cascadeId').val(treeNode.cascadeId);
 	 doQuery('dataList','queryForm');
   }
-  //提交组织机构数据并进行刷新
- function submitDeptData(formId, windowId){
-    $('#'+formId).form('submit', {
-			onSubmit : function(param) {
-				return $(this).form('enableValidation').form('validate');
-			},
-			success : function(data) {
-				var data = eval('(' + data + ')');
-				if (data) {
-					if (data.appcode=="1") {
-						showMsg('提示', data.appmsg);
-						 $("#deptTree").tree('reload');//刷新树
-						 $('#dataList').datagrid({});  //刷组织机构列表
-					     $('#'+windowId).window('close');
-						
-					}else if(data.appcode=="0"){
-					   $.messager.alert('警告信息', data.appmsg, 'warning');
-					}else {
-						$.messager.alert('错误信息', data.appmsg, 'error');
-					}
-				} else {
-					$.messager.alert('错误信息', '操作失败', 'error');
-				}
-			},
-			onLoadeError:function(){
-			         $.messager.alert('错误信息', '操作失败', 'error');
-			}
-		});
- 
- }
  //添加机构
  function addDept(){
-	 var row= $('#dataList').datagrid('getSelected');
-  var parent_id="0";
-   if(row!=null){
-     parent_id=row.dept_id;
+   var treeNode =$("#deptTree").tree('getSelected');
+   var parentId="0";
+   if(treeNode!=null){
+     parentId=treeNode.id;
    }
-   showWindow('addDataWindow','${ctx}/system/dept/goAdd.jhtml?parent_id='+parent_id);
+   showWindow('addDataWindow','${ctx}/system/dept/add?parentId='+parentId);
+ }
+ //成功提交回调
+ function submitCallBack(data){
+	 if(data.appcode == "1"){
+		 $("#deptTree").tree('reload');//刷新树
+	 }
+	
  }
   //删除组织机构
   function deleteDept(){
@@ -57,8 +34,8 @@
  	 var row= $('#dataList').datagrid('getSelected');
  	 if(row!=null){
  	    
- 		 var dept_id=row.dept_id;
- 		 if(dept_id=='0'){
+ 		 var deptId=row.deptId;
+ 		 if(deptId=='0'){
  			$.messager.alert('警告信息','顶级机构不能进行移动和删除操作，只能进行修改', 'warning');
  			return;
  		 }
@@ -69,7 +46,7 @@
  						type : 'post',
  						url  :'${ctx}/system/dept/deleteDept.jhtml',
  						data : {
-						  'dept_id' :dept_id
+						  'deptId' :deptId
 						},
  						dataType : 'json',
  						success : function(data) {
@@ -104,21 +81,16 @@
   function moveDept(){
 	  var row= $('#dataList').datagrid('getSelected');
 	   if(row!=null){
-	 		 var dept_id=row.dept_id;
-	 		 if(dept_id=='0'){
+	 		 var deptId=row.deptId;
+	 		 if(deptId=='0'){
 	 			$.messager.alert('警告信息','顶级机构不能进行移动和删除操作，只能进行修改', 'warning');
 	 			return;
 	 		 }
-	 		showWindow('moveDeptWindow','${ctx}/system/dept/goMove.jhtml?dept_id='+dept_id);
+	 		showWindow('moveDeptWindow','${ctx}/system/dept/goMove.jhtml?deptId='+deptId);
 	  }else{
 		  $.messager.alert('警告信息','请选择你要移动的机构', 'warning');
 	  }
   }
- //锁定第一行
- function lockFirstRow(data){
-  $('#dataList').datagrid('selectRow',0);
-   
- }
 </script>
 </head>
 <body style="margin: 0; padding: 0">
@@ -127,28 +99,28 @@
 		 <div class="easyui-layout" data-options="fit:true">
 				
 				<div data-options="region:'center'">
-					  <ul id="deptTree" class="easyui-tree" data-options="url:'${ctx }/system/dept/loadDeptTree.jhtml',method:'get',animate:true,lines:true,onClick:treeOnClickQuery"></ul>
+					  <ul id="deptTree" class="easyui-tree" data-options="url:'${ctx }/system/dept/loadTree',method:'get',animate:true,lines:true,onClick:treeOnClickQuery"></ul>
 				</div>
 			</div>
 		
 		</div>
 		<div data-options="region:'center'" >
 			<div class="easyui-layout" data-options="fit:true">
-				<div style="height: 35px; background-color: white;"
+				<div style="height: 40px; background-color: white;"
 					data-options="region:'north',split:false">
 					<form id="queryForm" method="post">
-					<input type="hidden"  name="cascade_id" id="cascade_id" />
+					<input type="hidden"  name="cascadeId" id="cascadeId" />
 						<table class="searchContent">
 							<tr>
 								<td width="15%" style="text-align: right">机构名称：</td>
 								<td width="40%" style="text-align: left">
-								<input type="text" name="dept_name" id="dept_name"  class="easyui-textbox" style="width: 200px;" />
+								<input type="text" name="deptName" id="deptName"  class="easyui-textbox" style="width: 200px;" />
 								</td>
 								
 								<td width="40%" rowspan="4" algin="left">
 										&nbsp;<a href="javascript:void(0)" class="easyui-linkbutton"
 									iconCls="icon-search" onclick="doQuery('dataList','queryForm')">查询</a> &nbsp;
-								<a href="javascript:void(0)" class="easyui-linkbutton" iconCls="refresh"  onclick="$('#queryForm').form('reset')">重置</a> 
+								<a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-reload"  onclick="$('#queryForm').form('reset')">重置</a> 
 								</td>
 							</tr>
 							
@@ -168,15 +140,14 @@
 	                striped:true,
 	                toolbar:'#toolbar',
 	                queryParams : $('#queryForm').serializeObject(),
-	                 url:'${ctx}/system/dept/listDept.jhtml',
-	                onLoadSuccess:lockFirstRow,
+	                url:'${ctx}/system/dept/list',
 	                fit:true,
 	                pageSize:20">
 
 						<thead>
 							<tr>
 								<th field="deptId" hidden=“true”>部门编号</th>
-								<th field="deptMame" formatter="formatCellTooltip" width="15%" align="center">机构名称</th>
+								<th field="deptName" formatter="formatCellTooltip" width="15%" align="center">机构名称</th>
 								<th field="deptCode"  formatter="formatCellTooltip" width="10%" align="center">机构代码</th>
 								<th field="manager"  formatter="formatCellTooltip" width="8%" align="center">主要负责人</th>
 								<th field="phone"  formatter="formatCellTooltip" width="11%" align="center">电话</th>
@@ -193,18 +164,18 @@
 				</div>
 				<div id="toolbar" style="padding: 2px;">
 
-					<a href="#" class="easyui-linkbutton" iconCls="add"
+					<a href="#" class="easyui-linkbutton" iconCls="icon-add"
 						plain="true"
 						onclick="addDept()">新增</a>
 
 					<a href="javascript:void(0);" class="easyui-linkbutton"
-						iconCls="edit" plain="true"
-						onclick="modifyGridData('modifyDataWindwo','dataList','dept_id','${ctx}/system/dept/goModify.jhtml','请选择你要修改的组织机构信息');">修改</a> 
+						iconCls="icon-edit" plain="true"
+						onclick="modifyGridData('modifyDataWindow','dataList','deptId','${ctx}/system/dept/goModify.jhtml','请选择你要修改的组织机构信息');">修改</a> 
 					<a href="javascript:void(0);" class="easyui-linkbutton"
 						iconCls="dept_move" plain="true"
 						onclick="moveDept();">移动机构</a> 
 						<a href="#"
-						class="easyui-linkbutton" iconCls="del" plain="true"
+						class="easyui-linkbutton" iconCls="icon-remove" plain="true"
 						onclick="deleteDept();">删除</a> 
 
 				</div>
@@ -218,7 +189,7 @@
 	<div id="addDataWindow" class="easyui-window" title="新增组织机构"
 		data-options="collapsible:false,shadow:false,minimizable:false,maximizable:false,modal:true,closed:true"
 		style="width: 850px; height: 380px; background-color: #FFFFFF"></div>
-	<div id="modifyDataWindwo" class="easyui-window" title="修改组织机构"
+	<div id="modifyDataWindow" class="easyui-window" title="修改组织机构"
 		data-options="collapsible:false,shadow:false,minimizable:false,maximizable:false,modal:true,closed:true"
 		style="width: 850px; height: 380px; background-color: #FFFFFF"></div>
 </body>

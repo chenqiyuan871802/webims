@@ -67,9 +67,9 @@
 		</div>
 		<div data-options="region:'south',border:false" height="40px"
 			style="text-align: center; background: #F4F4F4; padding: 5px 0 0;">
-			<a class="easyui-linkbutton" data-options="iconCls:'icon-save'"href="javascript:void(0)"
+			<a class="easyui-linkbutton" data-options="iconCls:'ok'"href="javascript:void(0)"
 			   onclick="submitFormData('editDataForm','dataList','editDataWindow')" style="width: 70px">保存</a> &nbsp;
-		    <a class="easyui-linkbutton" data-options="iconCls:'icon-cancel'" href="javascript:void(0)"
+		    <a class="easyui-linkbutton" data-options="iconCls:'close'" href="javascript:void(0)"
 				onclick="closeWindow('editDataWindow')" style="width: 70px">关闭</a>
 		</div>
 	</div>

@@ -28,7 +28,7 @@ public class TreeModel {
 	/**
 	 * 语义ID
 	 */
-	private String cascade_id;
+	private String cascadeId;
 	
 	/**
 	 * 树节点名称
@@ -115,15 +115,14 @@ public class TreeModel {
 	}
 
 
-
-	public String getCascade_id() {
-		return cascade_id;
+	public String getCascadeId() {
+		return cascadeId;
 	}
 
 
 
-	public void setCascade_id(String cascade_id) {
-		this.cascade_id = cascade_id;
+	public void setCascadeId(String cascadeId) {
+		this.cascadeId = cascadeId;
 	}
 
 

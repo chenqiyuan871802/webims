@@ -103,23 +103,23 @@ $.extend(
 					// 用户账号验证(只能包括 _ 数字 字母)
 					loginname : {
 						validator : function(value) {
-							return /^[a-zA-Z0-9_]{2,15}$/i.test(value);
+							return /^[a-zA-Z0-9_]{2,19}$/i.test(value);
 						},
-						message : '不合法（允许2-16字符，允许字母数字下划线）'
+						message : '不合法（允许2-20字符，允许字母数字下划线）'
 					},
 					// 用户账号验证(只能包括 _ 数字 字母)
 					account : {
 						validator : function(value) {
-							return /^[a-zA-Z][a-zA-Z0-9_]{1,15}$/i.test(value);
+							return /^[a-zA-Z][a-zA-Z0-9_]{1,19}$/i.test(value);
 						},
-						message : '用户账号不合法（字母开头，允许2-16字符，允许字母数字下划线）'
+						message : '用户账号不合法（字母开头，允许2-20字符，允许字母数字下划线）'
 					},
 					// 验证键名验证(只能包括 _ 数字 字母)
 					keyname : {
 						validator : function(value) {
-							return /^[a-zA-Z][a-zA-Z0-9_]{1,15}$/i.test(value);
+							return /^[a-zA-Z][a-zA-Z0-9_]{1,19}$/i.test(value);
 						},
-						message : '输入不合法（字母开头，允许2-16字符，允许字母数字下划线）'
+						message : '输入不合法（字母开头，允许2-20字符，允许字母数字下划线）'
 					},
 					// 汉字验证
 					CHS : {

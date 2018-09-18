@@ -12,6 +12,8 @@ import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
+import org.springframework.jdbc.core.JdbcTemplate;
+
 import com.alibaba.druid.pool.DruidDataSource;
 import com.alibaba.druid.support.http.StatViewServlet;
 import com.alibaba.druid.support.http.WebStatFilter;
@@ -83,6 +85,7 @@ public class DataSourceConfig {
     @Primary  //在同样的DataSource中，首先使用被标注的DataSource
     public DataSource dataSource() {
         DruidDataSource datasource = new DruidDataSource();
+     
 
         datasource.setUrl(this.dbUrl);
         datasource.setUsername(username);
@@ -108,7 +111,7 @@ public class DataSourceConfig {
             logger.error("druid configuration initialization filter", e);
         }
         datasource.setConnectionProperties(connectionProperties);
-
+      
         return datasource;
     }
 	@Bean
@@ -131,5 +134,20 @@ public class DataSourceConfig {
 		filterRegistrationBean.addInitParameter("DruidWebStatFilter", "/*");
 		return filterRegistrationBean;
 	}
+	/**
+	 * 
+	 * 简要说明：增加Jdbc模板支持
+	 * 编写者：陈骑元
+	 * 创建时间：2018年9月17日 上午11:11:46
+	 * @param 说明
+	 * @return 说明
+	 */
+	@Bean
+	@Primary
+	public JdbcTemplate getJdbcTemplate() {
+		JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource());
+		return jdbcTemplate;
+	}
+
 
 }

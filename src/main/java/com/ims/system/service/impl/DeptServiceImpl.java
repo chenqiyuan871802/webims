@@ -96,53 +96,44 @@ public class DeptServiceImpl extends ServiceImpl<DeptMapper, Dept> implements De
 	    	
 	    }
 		pDto.put("is_del",  IMSCons.IS.NO);  //查询有效的组织机构信息
-		if(StringUtils.equalsIgnoreCase(IMSCxt.getDbType(), DBType.SQLSERVER)){
-			pDto.setOrder("LEN(cascade_id) ASC,sort_no ASC ");
-		}else{
-			pDto.setOrder(" LENGTH(cascade_id) ASC,sort_no ASC ");
-		}
-		
-		List<DeptPO> deptPOList=deptMapper.list(pDto);
+		pDto.setOrder(" LENGTH(cascade_id) ASC,sort_no ASC ");
+		List<Dept> deptList=baseMapper.list(pDto);
 		TreeModel rootModel=new TreeModel();
-		rootModel.setText(rootDept.getDept_name());
-		rootModel.setId(rootDept.getDept_id());
-		if(IMSUtils.isNotEmpty(rootDept.getIcon_name())){
-			rootModel.setIconCls(rootDept.getIcon_name());
+		rootModel.setText(rootDept.getDeptName());
+		rootModel.setId(rootDept.getDeptId());
+		if(IMSUtil.isNotEmpty(rootDept.getIconName())){
+			rootModel.setIconCls(rootDept.getIconName());
 		}else{
-			rootModel.setIconCls(IMSCons.DEPT_ROOT_ICONCLS);
+			rootModel.setIconCls(SystemCons.DEPT_ROOT_ICONCLS);
 		}
-		rootModel.setCascade_id(rootDept.getCascade_id());
-		if(IMSCons.IS.NO.equals(rootDept.getIs_auto_expand())){
-			rootModel.setState(IMSCons.TREE_STATE_CLOSED);
+		rootModel.setCascadeId(rootDept.getCascadeId());
+		if(IMSCons.IS.NO.equals(rootDept.getIsAutoExpand())){
+			rootModel.setState(SystemCons.TREE_STATE_CLOSED);
 			
 		}
-		for(int i=0;i<deptPOList.size();i++){
-		    DeptPO deptPO=deptPOList.get(i);
-			int child_count=deptPO.getChild_count();
-			String parent_id=deptPO.getParent_id();
-			String icon_name=deptPO.getIcon_name();
+		for(int i=0;i<deptList.size();i++){
+		    Dept dept=deptList.get(i);
+			
+			String parentId=dept.getParentId();
+			String icon_name=dept.getIconName();
 			TreeModel treeModel=new TreeModel();
-			treeModel.setId(deptPO.getDept_id());
-			treeModel.setParentId(parent_id);
-			treeModel.setCascade_id(deptPO.getCascade_id());
-			treeModel.setText(deptPO.getDept_name());
-			if (IMSUtils.isNotEmpty(icon_name)) {
+			treeModel.setId(dept.getDeptId());
+			treeModel.setParentId(parentId);
+			treeModel.setCascadeId(dept.getCascadeId());
+			treeModel.setText(dept.getDeptName());
+			if (IMSUtil.isNotEmpty(icon_name)) {
 				treeModel.setIconCls(icon_name);
-			}else{
-				if(child_count==0){  //子节点替换子节点图标
-					treeModel.setIconCls(IMSCons.TREE_LEAF_INCONCLS);
-				}
 			}
-			String is_auto_expand = deptPO.getIs_auto_expand();
-			if(child_count>0){  //只有父节点才有闭合功能
-				if(IMSCons.IS.NO.equals(is_auto_expand)){
-					treeModel.setState(IMSCons.TREE_STATE_CLOSED);
-					
-				}
-			}
+			
 			rootModel.add(treeModel);
 		}
 		return rootModel;
 			  
+	}
+	
+	@Override
+	public String calc(Dto pDto) {
+		// TODO Auto-generated method stub
+		return baseMapper.calc(pDto);
 	};
 }
