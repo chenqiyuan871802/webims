@@ -52,7 +52,7 @@ public class DictServiceImpl extends ServiceImpl<DictMapper, Dict> implements Di
 	@Override
 	public List<Dict> like(Dto pDto){
 	
-	    return baseMapper.list(pDto);
+	    return baseMapper.like(pDto);
 	
 	};
 

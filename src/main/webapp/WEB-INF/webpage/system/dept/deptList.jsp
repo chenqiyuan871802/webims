@@ -24,7 +24,10 @@
  //成功提交回调
  function submitCallBack(data){
 	 if(data.appcode == "1"){
+		 $('#cascadeId').val('');
+		 doQuery('dataList','queryForm')
 		 $("#deptTree").tree('reload');//刷新树
+		 
 	 }
 	
  }
@@ -91,6 +94,12 @@
 		  $.messager.alert('警告信息','请选择你要移动的机构', 'warning');
 	  }
   }
+  
+  //锁定第一行
+  function lockFirstRow(data){
+   $('#dataList').datagrid('selectRow',0);
+    
+  }
 </script>
 </head>
 <body style="margin: 0; padding: 0">
@@ -141,6 +150,7 @@
 	                toolbar:'#toolbar',
 	                queryParams : $('#queryForm').serializeObject(),
 	                url:'${ctx}/system/dept/list',
+	                onLoadSuccess:lockFirstRow,
 	                fit:true,
 	                pageSize:20">
 
@@ -170,7 +180,7 @@
 
 					<a href="javascript:void(0);" class="easyui-linkbutton"
 						iconCls="icon-edit" plain="true"
-						onclick="modifyGridData('modifyDataWindow','dataList','deptId','${ctx}/system/dept/goModify.jhtml','请选择你要修改的组织机构信息');">修改</a> 
+						onclick="editGridData('editDataWindow','dataList','deptId','${ctx}/system/dept/edit','请选择你要修改的组织机构信息');">编辑</a> 
 					<a href="javascript:void(0);" class="easyui-linkbutton"
 						iconCls="dept_move" plain="true"
 						onclick="moveDept();">移动机构</a> 
@@ -189,7 +199,7 @@
 	<div id="addDataWindow" class="easyui-window" title="新增组织机构"
 		data-options="collapsible:false,shadow:false,minimizable:false,maximizable:false,modal:true,closed:true"
 		style="width: 850px; height: 380px; background-color: #FFFFFF"></div>
-	<div id="modifyDataWindow" class="easyui-window" title="修改组织机构"
+	<div id="editDataWindow" class="easyui-window" title="编辑组织机构"
 		data-options="collapsible:false,shadow:false,minimizable:false,maximizable:false,modal:true,closed:true"
 		style="width: 850px; height: 380px; background-color: #FFFFFF"></div>
 </body>

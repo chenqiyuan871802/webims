@@ -83,7 +83,7 @@
 		<div data-options="region:'south',border:false" height="40px"
 			style="text-align: center; background: #F4F4F4; padding: 5px 0 0;">
 			<a class="easyui-linkbutton" data-options="iconCls:'ok'"href="javascript:void(0)"
-			   onclick="submitFormData('addDataForm','dataList','addDataWindow','',submitCallBack)" style="width: 70px">保存</a> &nbsp;
+			   onclick="submitFormData('addDataForm','','addDataWindow','',submitCallBack)" style="width: 70px">保存</a> &nbsp;
 		    <a class="easyui-linkbutton" data-options="iconCls:'close'" href="javascript:void(0)"
 				onclick="closeWindow('addDataWindow')" style="width: 70px">关闭</a>
 		</div>

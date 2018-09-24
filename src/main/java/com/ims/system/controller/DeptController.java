@@ -159,7 +159,7 @@ public class DeptController extends BaseController {
 	@PostMapping("update")
 	@ResponseBody
 	public R update(Dept dept) {
-		boolean result = deptService.updateById(dept);
+		boolean result = deptService.updateDept(dept);
 		if (result) {
 			return R.ok();
 		} else {

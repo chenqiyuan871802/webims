@@ -52,7 +52,7 @@ public class ParamServiceImpl extends ServiceImpl<ParamMapper, Param> implements
 	@Override
 	public List<Param> like(Dto pDto){
 	
-	    return baseMapper.list(pDto);
+	    return baseMapper.like(pDto);
 	
 	};
 

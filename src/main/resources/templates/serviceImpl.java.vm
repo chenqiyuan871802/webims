@@ -57,7 +57,7 @@ public class ${table.serviceImplName} extends ${superServiceImplClass}<${table.m
 	@Override
 	public List<${entity}> like(Dto pDto){
 	
-	    return baseMapper.list(pDto);
+	    return baseMapper.like(pDto);
 	
 	};
 

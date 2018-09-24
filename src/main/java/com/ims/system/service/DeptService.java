@@ -57,4 +57,13 @@ public interface DeptService extends IService<Dept> {
 	 * @return 说明
 	 */
 	TreeModel loadDeptTree(Dto pDto);
+	/**
+	 * 
+	 * 简要说明：更新处理机构信息
+	 * 编写者：陈骑元
+	 * 创建时间：2018年9月23日 上午8:48:28
+	 * @param 说明
+	 * @return 说明
+	 */
+	boolean updateDept(Dept dept);
 }

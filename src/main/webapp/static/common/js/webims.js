@@ -557,10 +557,7 @@ function batchRemoveGridData(gridId,rowKey,url,warnMsg,confirmMsg,callback){
  		$.messager.alert('错误信息', '缺少form表单ID', 'error');
  		return;
  	}
- 	if (IMSUtils.isEmpty(gridId)) {
- 		$.messager.alert('错误信息', '缺少DataGrid表格ID', 'error');
- 		return;
- 	}
+ 
  	if (IMSUtils.isEmpty(windowId)) {
  		$.messager.alert('错误信息', '缺少Window窗口ID', 'error');
  		return;
@@ -583,13 +580,15 @@ function batchRemoveGridData(gridId,rowKey,url,warnMsg,confirmMsg,callback){
  			if (data) {
  				if (data.appcode == "1") {
  					showMsg('提示', data.appmsg);
+ 					if (IMSUtils.isNotEmpty(gridId)) {
+ 						if (controlType == '1') {
 
- 					if (controlType == '1') {
-
- 						$('#' + gridId).treegrid({});
- 					} else {
- 						$('#' + gridId).datagrid({});
+ 	 						$('#' + gridId).treegrid({});
+ 	 					} else {
+ 	 						$('#' + gridId).datagrid({});
+ 	 					}
  					}
+ 					
  					$('#' + windowId).window('close');
 
  				} else if (data.appcode == "0") {
