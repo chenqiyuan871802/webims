@@ -7,8 +7,9 @@ import com.ims.system.mapper.DeptMapper;
 import com.ims.system.service.DeptService;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import java.util.List;
 import com.ims.common.constant.IMSCons;
 import com.ims.common.matatype.Dto;
@@ -95,7 +96,7 @@ public class DeptServiceImpl extends ServiceImpl<DeptMapper, Dept> implements De
 			baseMapper.insert(rootDept);
 
 		}
-		pDto.put("is_del", IMSCons.IS.NO); // 查询有效的组织机构信息
+		pDto.put("isDel", IMSCons.IS.NO); // 查询有效的组织机构信息
 		pDto.setOrder(" LENGTH(cascade_id) ASC,sort_no ASC ");
 		List<Dept> deptList = baseMapper.list(pDto);
 		TreeModel rootModel = new TreeModel();
@@ -140,6 +141,7 @@ public class DeptServiceImpl extends ServiceImpl<DeptMapper, Dept> implements De
 	/**
 	 * 更新处理机构信息
 	 */
+	@Transactional
 	@Override
 	public boolean updateDept(Dept dept) {
 		String deptId = dept.getDeptId();

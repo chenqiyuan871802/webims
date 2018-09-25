@@ -104,7 +104,7 @@ function editParam(){
 					iconCls="icon-edit" plain="true" onclick="editParam();">编辑</a>
 			   <a  href="javascript:void(0);" class="easyui-linkbutton"
 				  iconCls="icon-remove" plain="true"
-				   onclick="removeGridData('dataList','paramId','${ctx}/system/param/remove','请选择你要删除键值参数信息','你确认要删除选择的键值参数信息吗？');";">删除</a>
+				   onclick="removeGridData('dataList','paramId','${ctx}/system/param/remove','请选择你要删除键值参数信息','你确认要删除选择的键值参数信息吗？');">删除</a>
 				<a href="javascript:void(0);" class="easyui-linkbutton"
 					iconCls="refresh" plain="true"
 					onclick="doAjax('${ctx}/system/param/refreshParam','','你确定要重新刷新键值参数缓存吗？')">刷新缓存</a>

@@ -3,6 +3,8 @@ package com.ims.system.controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
+
+import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.ims.common.constant.IMSCons;
 import com.ims.common.matatype.Dto;
@@ -13,12 +15,15 @@ import com.ims.common.util.IMSUtil;
 import com.ims.common.util.JsonUtil;
 import com.ims.common.util.PageDto;
 import com.ims.common.util.R;
+import com.ims.common.util.SqlHelpUtil;
+
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.ims.system.model.Dept;
+import com.ims.system.model.Dict;
 import com.ims.system.model.TreeModel;
 import com.ims.system.service.DeptService;
 import org.springframework.stereotype.Controller;
@@ -78,7 +83,7 @@ public class DeptController extends BaseController {
 	@ResponseBody
 	public PageDto list() {
 		Dto pDto = Dtos.newDto(request);
-		pDto.put("is_del", IMSCons.IS.NO);
+		pDto.put("isDel", IMSCons.IS.NO);
 		pDto.setOrder(" LENGTH(cascade_id) ASC,sort_no ASC ");
 		Page<Dept> page =deptService.likePage(pDto);
 		return new PageDto(page);
@@ -193,7 +198,18 @@ public class DeptController extends BaseController {
 	@PostMapping("remove")
 	@ResponseBody
 	public R remove(String id) {
-		boolean result = deptService.deleteById(id);
+		EntityWrapper<Dept> wrapper = new EntityWrapper<Dept>();
+		SqlHelpUtil.eq(wrapper, "parent_id", id);
+		SqlHelpUtil.eq(wrapper, "is_del", IMSCons.IS.NO);
+		int row=deptService.selectCount(wrapper);
+		if(row>0){
+			return R.warn("操作失败，当前组织机构下存在子机构，不允许删除，请先删除子机构然后再删除。");
+		}
+		Dept dept=new Dept();
+		dept.setDeptId(id);
+		dept.setIsDel(IMSCons.IS.YES);
+		dept.setUpdateTime(IMSUtil.getDateTime());
+		boolean result = deptService.updateById(dept);
 		if (result) {
 			return R.ok();
 		} else {

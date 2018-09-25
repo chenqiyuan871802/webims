@@ -32,7 +32,7 @@
 	
  }
   //删除组织机构
-  function deleteDept(){
+  function removeDept(){
 
  	 var row= $('#dataList').datagrid('getSelected');
  	 if(row!=null){
@@ -42,39 +42,13 @@
  			$.messager.alert('警告信息','顶级机构不能进行移动和删除操作，只能进行修改', 'warning');
  			return;
  		 }
- 		 	$.messager.confirm('确认', '组织机构是基础数据，删除组织机构将同时删除下属的用户，请慎重，你确认要删除选择的组织机构数据吗？',
- 				function(r) {
- 			    if(r){
- 					$.ajax({
- 						type : 'post',
- 						url  :'${ctx}/system/dept/deleteDept.jhtml',
- 						data : {
-						  'deptId' :deptId
-						},
- 						dataType : 'json',
- 						success : function(data) {
- 							if (data) {
- 								if (data.appcode == "1") {
- 									showMsg('提示', data.appmsg);
-						          $("#deptTree").tree('reload');//刷新树
-						          $('#dataList').datagrid({});  //刷新组织机构列表
- 								} else if(data.appcode=="0"){
-					                 $.messager.alert('警告信息', data.appmsg, 'warning');
-					             }else {
- 									$.messager.alert('错误信息',data.appmsg, 'error');
- 								}
- 							} else {
- 								$.messager.alert('错误信息', '删除失败',
- 										'error');
- 							}
- 						},
- 						error : function() {
- 							$.messager.alert('错误信息', '删除失败，网络连接超时',
- 									'error');
- 						}
- 					})
- 			    }
- 				});
+ 		removeGridData('dataList','deptId','${ctx}/system/dept/remove',
+ 				'组织机构是基础数据，删除组织机构将同时删除下属的用户，请慎重，你确认要删除选择的组织机构数据吗？','','',function(data){
+ 			if(data.appcode=="1"){
+ 				$("#deptTree").tree('reload');//刷新树
+ 			}
+ 		})
+ 		
  	}else{
  		$.messager.alert('警告信息','请选择你要删除的组织机构数据', 'warning');
  	}
@@ -186,7 +160,7 @@
 						onclick="moveDept();">移动机构</a> 
 						<a href="#"
 						class="easyui-linkbutton" iconCls="icon-remove" plain="true"
-						onclick="deleteDept();">删除</a> 
+						onclick="removeDept();">删除</a> 
 
 				</div>
 
