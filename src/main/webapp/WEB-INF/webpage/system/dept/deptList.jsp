@@ -63,7 +63,7 @@
 	 			$.messager.alert('警告信息','顶级机构不能进行移动和删除操作，只能进行修改', 'warning');
 	 			return;
 	 		 }
-	 		showWindow('moveDeptWindow','${ctx}/system/dept/goMove.jhtml?deptId='+deptId);
+	 		showWindow('moveDeptWindow','${ctx}/system/dept/move?deptId='+deptId);
 	  }else{
 		  $.messager.alert('警告信息','请选择你要移动的机构', 'warning');
 	  }

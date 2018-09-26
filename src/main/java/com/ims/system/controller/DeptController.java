@@ -152,7 +152,39 @@ public class DeptController extends BaseController {
 		model.addAttribute("dept", dept);
 		return prefix + "editDept";
 	}
-	
+	/**
+	 * 
+	 * 简要说明： 移动组织机构
+	 * 编写者：陈骑元
+	 * 创建时间：2018-05-14
+	 * @param 说明
+	 * @return 说明
+	 */
+	@GetMapping("move")
+	public String move(String deptId,Model model) {
+		Dept dept=deptService.selectById(deptId);
+		model.addAttribute("dept", dept);
+		return prefix + "moveDept";
+	}
+	/**
+	 * 
+	 * 简要说明：保存移动机构信息
+	 * 编写者：陈骑元
+	 * 创建时间：2018-05-14
+	 * @param 说明
+	 * @return 说明
+	 */
+	@PostMapping("saveMoveDept")
+	@ResponseBody
+	public R saveMoveDept(Dept dept) {
+		boolean result = deptService.updateDept(dept);
+		if (result) {
+			return R.ok("移动机构成功");
+		} else {
+			return R.error("移动机构失败");
+		}
+		
+	}
 	/**
 	 * 
 	 * 简要说明：修改信息
