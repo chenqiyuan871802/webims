@@ -9,6 +9,36 @@ package com.ims.system.constant;
  */
 public interface SystemCons {
 	
+	
+	/**
+	 * 菜单类型：父菜单
+	 */
+	public static final String MENU_TYPE_PARENT = "1";
+	/**
+	 * 菜单类型：子菜单
+	 */
+	public static final String MENU_TYPE_SUB = "2";
+	/**
+	 * 菜单类型：按钮
+	 */
+	public static final String MENU_TYPE_BUTTON = "3";
+	
+	/**
+	 * 用户类型：普通用户
+	 */
+	public static final String USER_TYPE_COMMON = "1";
+
+	/**
+	 * 用户类型：超级用户
+	 */
+	public static final String USER_TYPE_SUPER = "2";
+
+	/**
+	 * 用户类型：其他注册用户
+	 */
+	public static final String USER_TYPE_REGISTER = "3";
+
+	
 	/**
 	 * 
 	 */
@@ -22,10 +52,6 @@ public interface SystemCons {
 	 * 科目根节点语义ID
 	 */
 	public static final String TREE_ROOT_CASCADE_ID="0";
-	/**
-	 * 树的叶节点图标CSS类名
-	 */
-	public static final String TREE_LEAF_INCONCLS="tree_leaf";
 	/**
 	 * 树的节点打开
 	 */

@@ -208,11 +208,11 @@
 	</div>
 	<div id="addDictWindow" class="easyui-window" title="新增字典对照"
 		data-options="collapsible:false,shadow:false,minimizable:false,maximizable:false,modal:true,closed:true"
-		style="width: 500px; height: 400px; background-color: #FFFFFF">
+		style="width: 500px; height: 410px; background-color: #FFFFFF">
 	</div>
 	<div id="editDictWindow" class="easyui-window" title="编辑字典对照"
 		data-options="collapsible:false,shadow:false,minimizable:false,maximizable:false,modal:true,closed:true"
-		style="width: 500px; height: 400px; background-color: #FFFFFF">
+		style="width: 500px; height: 410px; background-color: #FFFFFF">
 	</div>
 
 </body>

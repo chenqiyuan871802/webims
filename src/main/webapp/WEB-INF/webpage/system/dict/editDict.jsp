@@ -13,47 +13,47 @@
 			 <input type="hidden"  name="dictId" value="${dict.dictId}" />
 				<table cellpadding=5 cellspacing=0 width=100% align="center" class="kv-table">
 					<tr>
-						<td >字典标识：</td>
-						<td ><input  type="text"  name="dictKey" value="${dictIndex.dictKey }"
+						<td class="kv-label">字典标识：</td>
+						<td class="kv-content"><input  type="text"  name="dictKey" value="${dictIndex.dictKey }"
 							class="easyui-textbox" disabled="true"
 							style="width: 280px;" ></td>
 					</tr>
 					<tr>
-						<td >字典名称：</td>
-		 				<td ><input  type="text"  name="dictName" value="${dictIndex.dictName }" disabled="true"
+						<td class="kv-label">字典名称：</td>
+		 				<td class="kv-content"><input  type="text"  name="dictName" value="${dictIndex.dictName }" disabled="true"
 							class="easyui-textbox" 
 							style="width: 280px;" ></td>
 					</tr>
 					<tr>
-						<td >字典对照码：</td>
-						<td ><input  type="text"  name="dictCode" value="${dict.dictCode}"  required="true" data-options="validType:'length[1,100]'"
+						<td class="kv-label">字典对照码：</td>
+						<td class="kv-content"><input  type="text"  name="dictCode" value="${dict.dictCode}"  required="true" data-options="validType:'length[1,100]'"
 							class="easyui-textbox" style="width: 280px; " ></td>
 					</tr>
 					<tr>
-						<td >字典对照值：</td>
-						<td ><input  type="text"  name="dictValue" value="${dict.dictValue }" required="true" data-options="validType:'length[1,100]'"
+						<td class="kv-label" >字典对照值：</td>
+						<td class="kv-content"><input  type="text"  name="dictValue" value="${dict.dictValue }" required="true" data-options="validType:'length[1,100]'"
 							class="easyui-textbox" style="width: 280px; " ></td>
 					</tr>
 					<tr>
-						<td >显示颜色：</td>
-						<td ><input  type="text"  name="showColor" value="${dict.showColor }" data-options="validType:'length[0,20]'"
+						<td class="kv-label" >显示颜色：</td>
+						<td class="kv-content"><input  type="text"  name="showColor" value="${dict.showColor }" data-options="validType:'length[0,20]'"
 							class="easyui-textbox" style="width: 280px; " ></td>
 					</tr>
 					<tr>
-						<td >当前状态：</td>
-						<td ><input name="status" type="text" value="${dict.status }"  editable="false" 
+						<td class="kv-label" >当前状态：</td>
+						<td class="kv-content" ><input name="status" type="text" value="${dict.status }"  editable="false" 
 							class="easyui-combobox"   data-options="data:statusStore,textField:1,valueField:0"  
 							style="width: 280px; " ></td>
 					</tr>
 					<tr>
-						<td >编辑模式：</td>
-						<td ><input name="editMode" value="${dict.editMode }" type="text"  editable="false" 
+						<td class="kv-label" >编辑模式：</td>
+						<td class="kv-content" ><input name="editMode" value="${dict.editMode }" type="text"  editable="false" 
 							class="easyui-combobox"   data-options="data:edit_modeStore,textField:1,valueField:0"  
 							style="width: 280px; " ></td>
 					</tr>
 					<tr>
-						<td >排序号：</td>
-						<td ><input name="sortNo" type="text" value="${dict.sortNo }"
+						<td class="kv-label">排序号：</td>
+						<td class="kv-content" ><input name="sortNo" type="text" value="${dict.sortNo }"
 							class="easyui-numberspinner"  data-options="min:1,max:1000000,required:true"
 							style="width: 280px; " required="true"></td>
 					</tr>
