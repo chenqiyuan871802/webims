@@ -56,7 +56,7 @@ public class WebimsBuilder {
 		strategy.setSuperControllerClass("com.ims.common.web.BaseController");
 		// strategy.setSuperEntityColumns(new String[] { "update_by",
 		// "update_time" });
-		strategy.setInclude(new String[] {"sys_menu" }); // 需要生成的表
+		strategy.setInclude(new String[] {"sys_role_user" }); // 需要生成的表
 		mpg.setStrategy(strategy);
 
 		// 包配置

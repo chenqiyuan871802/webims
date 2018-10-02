@@ -741,7 +741,7 @@
 						"F_EnCode" : "RoleManage",
 						"F_FullName" : "角色管理",
 						"F_Icon" : "fa fa-paw",
-						"F_UrlAddress" : "/BaseManage/Role/Index",
+						"F_UrlAddress" : "system/role/init",
 						"F_Target" : "iframe",
 						"F_IsMenu" : 1,
 						"F_AllowExpand" : 1,
