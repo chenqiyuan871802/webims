@@ -69,6 +69,7 @@ public class UserController extends BaseController {
 		Dto pDto = Dtos.newDto(request);
 		pDto.put("isDel", IMSCons.IS.NO);
 		pDto.setOrder(" a.create_time DESC ");
+		pDto.put("userType", SystemCons.USER_TYPE_COMMON);
 		Page<User> page =userService.listUserPage(pDto);
 		return new PageDto(page);
 	}

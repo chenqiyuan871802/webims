@@ -267,11 +267,11 @@
 	   <if test="status != null and status != ''">
 		      AND a.status = #{status}  <!-- 用户状态 1:有效2:停用 3:锁定 -->
 		</if>
-	    <if test="user_type != null and user_type != ''">
-		      AND a.user_type =#{user_type}
+	    <if test="userType != null and userType != ''">
+		      AND a.user_type =#{userType}
 		</if>
-	    <if test="dept_id != null and dept_id != ''">
-		      AND a.dept_id=#{dept_id}
+	    <if test="deptId != null and deptId != ''">
+		      AND a.deptId=#{deptId}
 		</if>
 	    <if test="mobile != null and mobile != ''">
 		      AND a.mobile LIKE '%${mobile}%'  <!-- 联系电话 -->
