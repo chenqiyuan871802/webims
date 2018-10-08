@@ -9,6 +9,8 @@
 ![![输入图片说明](https://images.gitee.com/uploads/images/2018/1008/113601_65ede09a_436510.png "主页面.png")
 ![输入图片说明](https://images.gitee.com/uploads/images/2018/1008/113922_9d36ab54_436510.png "全屏页面.png")
 ![输入图片说明](https://images.gitee.com/uploads/images/2018/1008/114012_bcb5b932_436510.png "用户管理.png")
+你的鼓励将是我最大的支持
+![输入图片说明](https://git.oschina.net/uploads/images/2017/0814/111124_0b3a1336_436510.png "屏幕截图.png")![输入图片说明](https://git.oschina.net/uploads/images/2017/0814/111137_4628637b_436510.png "屏幕截图.png")
 #### 软件架构
 软件架构说明
 
