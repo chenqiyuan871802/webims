@@ -33,7 +33,7 @@ public interface IMSCons {
 	
 	public static final String APP_ID_KEY="IMS:id_";
 	 
-	public static final String SUPER_ADMIN="super";
+	
     /**
      * 密码秘钥
      */

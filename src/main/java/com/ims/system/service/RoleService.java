@@ -1,6 +1,8 @@
 package com.ims.system.service;
 
 import com.ims.system.model.Role;
+import com.ims.system.model.RoleUser;
+import com.ims.system.model.TreeModel;
 import com.baomidou.mybatisplus.service.IService;
 import java.util.List;
 import com.ims.common.matatype.Dto;
@@ -56,4 +58,50 @@ public interface RoleService extends IService<Role> {
 	  * @return 说明
 	  */
 	 boolean removeRole(String roleId);
+	 /**
+	  * 
+	  * 简要说明：移除角色
+	  * 编写者：陈骑元
+	  * 创建时间：2018年10月2日 上午10:47:11
+	  * @param 说明
+	  * @return 说明
+	  */
+	 boolean batchSaveRoleUser(String roleId,List<String> userIdList);
+	 /**
+	  * 
+	  * 简要说明：移除角色
+	  * 编写者：陈骑元
+	  * 创建时间：2018年10月2日 上午10:47:11
+	  * @param 说明
+	  * @return 说明
+	  */
+	 boolean batchRemoveRoleUser(String roleId,List<String> userIdList);
+	 
+	 /**
+	  * 
+	  * 简要说明：移除角色
+	  * 编写者：陈骑元
+	  * 创建时间：2018年10月2日 上午10:47:11
+	  * @param 说明
+	  * @return 说明
+	  */
+	 boolean batchSaveRoleMenu(String roleId,List<String> menuIdList);
+	 /**
+	  * 
+	  * 简要说明：加载授权菜单树
+	  * 编写者：陈骑元
+	  * 创建时间：2018年9月28日 下午3:50:41
+	  * @param 说明
+	  * @return 说明
+	  */
+	 TreeModel loadGrentMenuTree(Dto pDto);
+	 /**
+	  * 
+	  * 简要说明：获取授权的角色
+	  * 编写者：陈骑元
+	  * 创建时间：2018年10月7日 下午9:43:52
+	  * @param 说明
+	  * @return 说明
+	  */
+	 RoleUser selectRoleUser(String userId);
 }

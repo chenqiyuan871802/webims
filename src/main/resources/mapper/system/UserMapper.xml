@@ -240,7 +240,17 @@
 		FROM sys_user a  INNER JOIN sys_dept b
 		ON a.dept_id=b.dept_id
 		<where>
-		
+		<if test="queryParam!= null and queryParam != ''">
+		      AND (a.account LIKE '%${queryParam}%' OR a.username LIKE '%${queryParam}%')<!-- 登陆账号或登陆名 -->
+		</if>
+		 <if test="queryWay != null and queryWay != ''">
+		   <if test="queryWay==1"> <!-- 查询待选用户列表 -->
+		       AND  NOT EXISTS (SELECT  1 FROM sys_role_user r WHERE r.user_id=a.user_id )
+		    </if>   
+		   <if test="queryWay==2"> <!-- 查询待选用户列表 -->
+		       AND   EXISTS (SELECT  1 FROM sys_role_user r WHERE r.user_id=a.user_id AND r.role_id=#{roleId})
+		    </if>   
+		</if>
 	    <if test="cascadeId != null and cascadeId != ''">
 		      AND b.cascade_id LIKE '${cascadeId}%'    <!-- 使用语义ID关联 -->
 		</if>

@@ -6,12 +6,20 @@ import org.springframework.ui.Model;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.ims.common.matatype.Dto;
 import com.ims.common.matatype.Dtos;
+import com.ims.common.util.IMSCxt;
 import com.ims.common.util.IMSFormater;
 import com.ims.common.util.IMSUtil;
+import com.ims.common.util.JsonUtil;
 import com.ims.common.util.PageDto;
 import com.ims.common.util.R;
 import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
 import com.ims.system.model.Role;
+import com.ims.system.model.TreeModel;
 import com.ims.system.service.RoleService;
 import org.springframework.stereotype.Controller;
 import com.ims.common.web.BaseController;
@@ -186,6 +194,102 @@ public class RoleController extends BaseController {
 			return R.error("删除失败");
 		}
 		
+	}
+	/**
+	 * 
+	 * 简要说明： 授权用户
+	 * 编写者：陈骑元
+	 * 创建时间：2018-10-02
+	 * @param 说明
+	 * @return 说明
+	 */
+	@GetMapping("grantMenu")
+	public String grantMenu(String id,Model model) {
+		model.addAttribute("roleId",id);
+		return prefix + "grantMenu";
+	}
+	/**
+	 * 
+	 * 加载授权菜单树
+	 * @param request
+	 * @param response
+	 */
+	@GetMapping("loadGrantMenuTree")
+	public void loadGrantMenuTree(HttpServletRequest request, HttpServletResponse response,HttpSession session) {
+		Dto pDto=Dtos.newDto(request);
+	    TreeModel treeModel=roleService.loadGrentMenuTree(pDto);
+		String outString ="["+JsonUtil.toJson(treeModel)+"]";
+		IMSCxt.write(response, outString);
+	}
+	/**
+	 * 
+	 * 简要说明： 保存授权菜单
+	 * 编写者：陈骑元
+	 * 创建时间：2018-10-02
+	 * @param 说明
+	 * @return 说明
+	 */
+	@PostMapping("saveRoleMenu")
+	@ResponseBody
+	public R saveRoleMenu(String roleId,String menuIds) {
+		List<String> menuIdList=IMSFormater.separatStringToList(menuIds);
+		boolean result=roleService.batchSaveRoleMenu(roleId, menuIdList);
+		if (result) {
+			return R.ok("授权菜单成功");
+		} else {
+			return R.error("授权菜单失败");
+		}
+	}
+	/**
+	 * 
+	 * 简要说明： 授权用户
+	 * 编写者：陈骑元
+	 * 创建时间：2018-10-02
+	 * @param 说明
+	 * @return 说明
+	 */
+	@GetMapping("grantUser")
+	public String grantUser(String id,Model model) {
+		model.addAttribute("roleId",id);
+		return prefix + "grantUser";
+	}
+	/**
+	 * 
+	 * 简要说明： 保存授权用户
+	 * 编写者：陈骑元
+	 * 创建时间：2018-10-02
+	 * @param 说明
+	 * @return 说明
+	 */
+	@PostMapping("saveRoleUser")
+	@ResponseBody
+	public R saveRoleUser(String roleId,String userIds) {
+		List<String> userIdList=IMSFormater.separatStringToList(userIds);
+		boolean result=roleService.batchSaveRoleUser(roleId, userIdList);
+		if (result) {
+			return R.ok("用户授权成功");
+		} else {
+			return R.error("用户授权失败");
+		}
+	}
+	/**
+	 * 
+	 * 简要说明： 撤销授权用户
+	 * 编写者：陈骑元
+	 * 创建时间：2018-10-02
+	 * @param 说明
+	 * @return 说明
+	 */
+	@PostMapping("cancelRoleUser")
+	@ResponseBody
+	public R cancelRoleUser(String roleId,String userIds) {
+		List<String> userIdList=IMSFormater.separatStringToList(userIds);
+		boolean result=roleService.batchRemoveRoleUser(roleId, userIdList);
+		if (result) {
+			return R.ok("撤销用户授权成功");
+		} else {
+			return R.error("撤销用户授权失败");
+		}
 	}
 	
 }

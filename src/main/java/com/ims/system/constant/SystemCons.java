@@ -8,8 +8,23 @@ package com.ims.system.constant;
  * 修改说明:
  */
 public interface SystemCons {
-	
-	
+	/**
+	 * 超级账号
+	 */
+	public static final String SUPER_ADMIN="super";
+	/**
+	 * 用户状态 有效
+	 */
+	public static final String USER_STATE_VALID = "1";
+
+	/**
+	 * 用户状态 停用
+	 */
+	public static final String USER_STATUS_STOP = "2";
+	/**
+	 * 用户状态 锁定
+	 */
+	public static final String USER_STATUS_LOCK = "3";
 	/**
 	 * 菜单类型：父菜单
 	 */

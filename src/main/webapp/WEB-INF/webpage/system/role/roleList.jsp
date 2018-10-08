@@ -22,26 +22,8 @@ function editRole(){
 			$.messager.alert('警告信息', '请选择你要修改角色信息', 'warning');
 		}
 }
-//菜单授权
-function grantMenu(){
-	 var row= $('#dataList').datagrid('getSelected');
-		if(row!=null){
-		 var  roleId=row.roleId;
-	     showWindow('grantMenuWindow','${ctx}/system/initGrantMenu.jhtml?roleId='+roleId)
-		}else{
-			$.messager.alert('警告信息', '请选择你要菜单授权的角色', 'warning');
-		}
-}
-//授权用户
-function grantUser(){
-	var row= $('#dataList').datagrid('getSelected');
-	if(row!=null){
-	  var  roleId=row.roleId;
-      showWindow('grantUserWindow','${ctx}/system/initGrantUser.jhtml?roleId='+roleId)
-	}else{
-		$.messager.alert('警告信息', '请选择你要用户授权的角色', 'warning');
-	}
-}
+
+
 //删除角色
 function removeRole(){
 	 var row= $('#dataList').datagrid('getSelected');
@@ -114,17 +96,17 @@ function removeRole(){
 	</table>
 	<div id="toolbar" style="padding: 2px;">
         
-		<a href="#" class="easyui-linkbutton" iconCls="icon-add"
+		<a href="javascript:void(0);" class="easyui-linkbutton" iconCls="icon-add"
 			plain="true"
 			onclick="showWindow('addDataWindow','${ctx}/system/role/add');">新增</a> 
 		<a href="javascript:void(0);" class="easyui-linkbutton"
 			iconCls="icon-edit" plain="true"
 			onclick="editRole();">编辑</a>
-			 <a href="#" class="easyui-linkbutton" iconCls="role_grant"
-			plain="true" onclick="grantMenu()">菜单授权</a>
-	   <a href="#" class="easyui-linkbutton" iconCls="user_grant"
-			plain="true" onclick="grantUser()">用户授权</a>
-	   <a href="#" class="easyui-linkbutton" iconCls="icon-remove"
+		<a href="javascript:void(0);" class="easyui-linkbutton" iconCls="role_grant"
+			plain="true" onclick="showGridData('grantMenuWindow','dataList','roleId','${ctx}/system/role/grantMenu','请选择你要菜单授权的角色')">菜单授权</a>
+	   <a href="javascript:void(0);" class="easyui-linkbutton" iconCls="user_grant"
+			plain="true" onclick="showGridData('grantUserWindow','dataList','roleId','${ctx}/system/role/grantUser','请选择你要用户授权的角色')">用户授权</a>
+	   <a href="javascript:void(0);" class="easyui-linkbutton" iconCls="icon-remove"
 			plain="true" onclick="removeRole()">删除</a>
 	  
 	</div>
@@ -145,7 +127,7 @@ function removeRole(){
 		style="width: 400px; height:480px; background-color: #FFFFFF"></div>
     <div id="grantUserWindow" class="easyui-window" title="用户授权"
 		data-options="collapsible:false,shadow:false,minimizable:false,maximizable:false,modal:true,closed:true"
-		style="width: 1100px; height:480px; background-color: #FFFFFF"></div>
+		style="width: 1120px; height:480px; background-color: #FFFFFF"></div>
    
    
     

@@ -4,8 +4,8 @@ import com.ims.system.model.User;
 import com.baomidou.mybatisplus.service.IService;
 import java.util.List;
 import com.ims.common.matatype.Dto;
+import com.ims.common.util.R;
 import com.baomidou.mybatisplus.plugins.Page;
-import com.baomidou.mybatisplus.plugins.pagination.Pagination;
 /**
  * <p>
  * 用户基本信息表 服务类
@@ -57,4 +57,13 @@ public interface UserService extends IService<User> {
 	  * @return 说明
 	  */
 	 Page<User> listUserPage(Dto pDto);
+	 /**
+	  * 
+	  * 简要说明：检查登陆
+	  * 编写者：陈骑元
+	  * 创建时间：2018年10月7日 下午8:21:39
+	  * @param 说明
+	  * @return 说明
+	  */
+	 R checkLogin(String account,String password);
 }

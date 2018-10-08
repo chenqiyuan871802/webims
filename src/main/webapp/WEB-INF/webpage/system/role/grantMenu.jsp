@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
-<%@ include file="/WEB-INF/webpage/common/taglibs.jsp"%>
+<%@ include file="/WEB-INF/webpage/common/tagLibs.jsp"%>
 <head>
 <meta charset="UTF-8">
 </head>
@@ -26,21 +26,21 @@
 				return ;
 			}
 			$("#menuIds").val(menuIds);
-			submitFormData('grantMenuForm','roleList','grantMenuWindow');
+			submitFormData('grantMenuForm','dataList','grantMenuWindow');
  }
 </script>
 	<div class="easyui-layout" data-options="fit:true">
 		<div data-options="region:'center',border:false" style="padding: 5px;">
-			<form id="grantMenuForm" action="${ctx }/system/saveRoleMenu"
+			<form id="grantMenuForm" action="${ctx }/system/role/saveRoleMenu"
 				method="post" >
 				<input type="hidden" name="roleId" value="${roleId}"  />
 				<input type="hidden" name="menuIds" id="menuIds"  />
-			<ul id="menuTree" class="easyui-tree" data-options="url:'${ctx }/system/loadGrantMenuTree.jhtml?roleId=${roleId}',method:'get',checkbox:true,animate:true,lines:true,"></ul>
+			<ul id="menuTree" class="easyui-tree" data-options="url:'${ctx }/system/role/loadGrantMenuTree?roleId=${roleId}',method:'get',checkbox:true,animate:true,lines:true,"></ul>
 				
 
 			</form>
 		</div>
-		<div data-options="region:'south',border:false" height="35px"
+		<div data-options="region:'south',border:false" height="40px"
 			style="text-align: center; background: #F4F4F4; padding: 5px 0 0;">
 			<a class="easyui-linkbutton" data-options="iconCls:'ok'"href="javascript:void(0)"
 			   onclick="submitGrantMenuData()" style="width: 70px">保存</a> &nbsp;

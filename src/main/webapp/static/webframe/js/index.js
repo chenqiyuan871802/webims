@@ -302,34 +302,34 @@
             var _html = "";
             $.each(data, function (i) {
                 var row = data[i];
-                if (row.F_ParentId == "0") {
+                if (row.parentId == "0") {
                     if (i == 0) {
                         _html += '<li class="treeview active">';
                     } else {
                         _html += '<li class="treeview">';
                     }
                     _html += '<a href="#">'
-                    _html += '<i class="' + row.F_Icon + '"></i><span>' + row.F_FullName + '</span><i class="fa fa-angle-left pull-right"></i>'
+                    _html += '<i class="' + row.iconName + '"></i><span>' + row.menuName + '</span><i class="fa fa-angle-left pull-right"></i>'
                     _html += '</a>'
-                    var childNodes = $.learunindex.jsonWhere(data, function (v) { return v.F_ParentId == row.F_ModuleId });
+                    var childNodes = $.learunindex.jsonWhere(data, function (v) { return v.parentId == row.menuId});
                     if (childNodes.length > 0) {
                         _html += '<ul class="treeview-menu">';
                         $.each(childNodes, function (i) {
                             var subrow = childNodes[i];
-                            var subchildNodes = $.learunindex.jsonWhere(data, function (v) { return v.F_ParentId == subrow.F_ModuleId });
+                            var subchildNodes = $.learunindex.jsonWhere(data, function (v) { return v.parentId == subrow.menuId});
                             _html += '<li>';
                             if (subchildNodes.length > 0) {
-                                _html += '<a href="#"><i class="' + subrow.F_Icon + '"></i>' + subrow.F_FullName + '';
+                                _html += '<a href="#"><i class="' + subrow.iconName + '"></i>' + subrow.menuName + '';
                                 _html += '<i class="fa fa-angle-left pull-right"></i></a>';
                                 _html += '<ul class="treeview-menu">';
                                 $.each(subchildNodes, function (i) {
                                     var subchildNodesrow = subchildNodes[i];
-                                    _html += '<li><a class="menuItem" data-id="' + subrow.F_ModuleId + '" href="' +ctx+'/' + subrow.F_UrlAddress + '"><i class="' + subchildNodesrow.F_Icon + '"></i>' + subchildNodesrow.F_FullName + '</a></li>';
+                                    _html += '<li><a class="menuItem" data-id="' + subrow.menuId+ '" href="' +ctx+'/' + subrow.url + '"><i class="' + subchildNodesrow.iconName + '"></i>' + subchildNodesrow.menuName + '</a></li>';
                                 });
                                 _html += '</ul>';
 
                             } else {
-                                _html += '<a class="menuItem" data-id="' + subrow.F_ModuleId + '" href="' +ctx+'/'+ subrow.F_UrlAddress + '"><i class="' + subrow.F_Icon + '"></i>' + subrow.F_FullName + '</a>';
+                                _html += '<a class="menuItem" data-id="' + subrow.menuId+ '" href="' +ctx+'/'+ subrow.url + '"><i class="' + subrow.iconName + '"></i>' + subrow.menuName + '</a>';
                             }
                             _html += '</li>';
                         });

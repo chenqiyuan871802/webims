@@ -1,5 +1,5 @@
 <%@ page contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
-<%@ include file="/WEB-INF/webpage/common/taglibs.jsp"%>
+<%@ include file="/WEB-INF/webpage/common/tagLibs.jsp"%>
 <head>
 <meta charset="UTF-8">
 </head>
@@ -9,7 +9,7 @@
   function treeOnClickQuery(treeNode){
      
      $('#queryUserForm').form('reset');//重置查询框的值
-	 $('#cascade_id').val(treeNode.cascade_id);
+	 $('#cascadeId').val(treeNode.cascadeId);
 	 doQuery('userList','queryUserForm');
   }
    //待选择的查询
@@ -23,38 +23,18 @@
  //选择用户
  function selectUser(){
 	 var rows = $('#userList').datagrid('getChecked');
-	 var user_ids = getRowValues(rows,'user_id');
-	 var role_id='${role_id}';
-	 if(user_ids!=''){
-		 $.ajax({
-				type : 'post',
-				url  :'${ctx}/system/saveRoleUser.jhtml',
-				data : {
-				  'user_ids' :user_ids,
-				  'role_id': role_id
-				},
-				dataType : 'json',
-				success : function(data) {
-					if (data) {
-						if (data.appcode == "1") {
-							showMsg('提示', data.appmsg);
-				          $('#userList').datagrid({});  //刷新菜单列表
-				          $('#selectUserList').datagrid({});  //刷新菜单列表
-						} else if(data.appcode=="0"){
-			                 $.messager.alert('警告信息', data.appmsg, 'warning');
-			             }else {
-							$.messager.alert('错误信息',data.appmsg, 'error');
-						}
-					} else {
-						$.messager.alert('错误信息', '删除失败',
-								'error');
-					}
-				},
-				error : function() {
-					$.messager.alert('错误信息', '删除失败，网络连接超时',
-							'error');
-				}
-			})
+	 var userIds = getRowValues(rows,'userId');
+	 var roleId='${roleId}';
+	 if(userIds!=''){
+		 var paramData = {};
+		 paramData.userIds=userIds;
+		 paramData.roleId=roleId;
+		 doAjax('${ctx}/system/role/saveRoleUser',paramData,'','',function(data){
+			 if (data.appcode == "1") {
+				 $('#userList').datagrid({});  //刷新菜单列表
+		         $('#selectUserList').datagrid({});  //刷新菜单列表
+			 }
+		 })
 	 }else{
 		 $.messager.alert('警告信息', '请选择你要授权的用户', 'warning');
 	 }
@@ -62,40 +42,21 @@
 	 	
  }
  //撤销用户
- function cancelUser(){
+ function cancelRoleUser(){
 	 var rows = $('#selectUserList').datagrid('getChecked');
-	 var user_ids = getRowValues(rows,'user_id');
-	 var role_id='${role_id}';
-	 if(user_ids!=''){
-		 $.ajax({
-				type : 'post',
-				url  :'${ctx}/system/deleteRoleUser.jhtml',
-				data : {
-				  'user_ids' :user_ids,
-				  'role_id': role_id
-				},
-				dataType : 'json',
-				success : function(data) {
-					if (data) {
-						if (data.appcode == "1") {
-							showMsg('提示', data.appmsg);
-				          $('#userList').datagrid({});  //刷新菜单列表
-				          $('#selectUserList').datagrid({});  //刷新菜单列表
-						} else if(data.appcode=="0"){
-			                 $.messager.alert('警告信息', data.appmsg, 'warning');
-			             }else {
-							$.messager.alert('错误信息',data.appmsg, 'error');
-						}
-					} else {
-						$.messager.alert('错误信息', '删除失败',
-								'error');
-					}
-				},
-				error : function() {
-					$.messager.alert('错误信息', '删除失败，网络连接超时',
-							'error');
-				}
-			})
+	 var userIds = getRowValues(rows,'userId');
+	 var roleId='${roleId}';
+	 
+	 if(userIds!=''){
+		 var paramData = {};
+		 paramData.userIds=userIds;
+		 paramData.roleId=roleId;
+		 doAjax('${ctx}/system/role/cancelRoleUser',paramData,'','',function(data){
+			 if (data.appcode == "1") {
+				 $('#userList').datagrid({});  //刷新菜单列表
+		         $('#selectUserList').datagrid({});  //刷新菜单列表
+			 }
+		 })
 	 }else{
 		 $.messager.alert('警告信息', '请选择你要撤销的用户', 'warning');
 	 }
@@ -105,19 +66,20 @@
    <div class="easyui-layout" data-options="fit:true,border:false">
    <div data-options="region:'center',border:false" >
 	<div class="easyui-layout"  data-options="fit:true,border:false">
-		<div data-options="region:'west',collapsible:false" title="组织机构树" style="width: 210px;">
+		<div data-options="region:'west',collapsible:false" title="组织机构树" style="width: 180px;">
 	
 				<div data-options="region:'center',border:false">
-					  <ul id="deptTree" class="easyui-tree" data-options="url:'${ctx }/system/dept/loadDeptTree.jhtml',method:'get',animate:true,lines:true,onClick:treeOnClickQuery"></ul>
+					  <ul id="deptTree" class="easyui-tree" data-options="url:'${ctx }/system/dept/loadTree',method:'get',animate:true,lines:true,onClick:treeOnClickQuery"></ul>
 				</div>
 		</div>
 		<div data-options="region:'center',border:false">
 		<div class="easyui-layout" data-options="fit:true,border:false">
-		<div data-options="region:'west',collapsible:false" width="400px" title="待选用户列表">
+		<div data-options="region:'west',collapsible:false" width="430px" title="待选用户列表">
 		<div class="easyui-layout"  data-options="fit:true">
-        <div  style="height:34px;background-color: white;"  data-options="region:'north',split:false, border:false">
+        <div  style="height:40px;background-color: white;"  data-options="region:'north',split:false, border:false">
         <form id="queryUserForm" method="post">
-        <input type="hidden"  name="cascade_id" id="cascade_id" />
+        <input type="hidden"  name="cascadeId" id="cascadeId" />
+        <input type="hidden"  name="queryWay" value="1" />
         <table class="searchContent">
 		<tr>
 					
@@ -140,17 +102,17 @@
 	                pagination:true,
 	                striped:true,
 	                queryParams : $('#queryUserForm').serializeObject(),
-	                 url:'${ctx}/system/listUser.jhtml',
+	                 url:'${ctx}/system/user/list',
 	                fit:true,
 	                pageSize:20">
 
 						<thead>
 							<tr>
-								<th field="user_id" hidden=“true”>用户编号</th>
+								<th field="userId" hidden=“true”>用户编号</th>
 								<th data-options="field:'ck',checkbox:true"></th>
-								<th field="account" formatter="formatCellTooltip" width="30%" align="center">用户账号</th>
-								<th field="username"  formatter="formatCellTooltip" width="30%" align="center">用户名</th>
-								<th field="dept_name"  formatter="formatCellTooltip" width="30%" align="center">所属机构</th>
+								<th field="account" formatter="formatCellTooltip" width="31%" align="center">用户账号</th>
+								<th field="username"  formatter="formatCellTooltip" width="31%" align="center">用户名</th>
+								<th field="deptName"  formatter="formatCellTooltip" width="33%" align="center">所属机构</th>
 							</tr>
 						</thead>
 					</table>
@@ -162,15 +124,16 @@
 	    <a href="javascript:void(0)" title="选中授权" class="easyui-linkbutton"
 					iconCls="right" iconAlign="right" onClick="selectUser()">选中</a>
 		<a href="javascript:void(0)" title="撤销授权" class="easyui-linkbutton"
-					iconCls="left" style="margin:20px 0px 0px 0px;" onClick="cancelUser()">撤销</a>
+					iconCls="left" style="margin:20px 0px 0px 0px;" onClick="cancelRoleUser()">撤销</a>
 		</div>
 	
 		</div>
-		<div data-options="region:'east',collapsible:false" width="400px" title="已选用户列表">
+		<div data-options="region:'east',collapsible:false" width="430px" title="已选用户列表">
 		<div class="easyui-layout"  data-options="fit:true">
-        <div  style="height:34px;background-color: white;"  data-options="region:'north',split:false, border:false">
+        <div  style="height:40px;background-color: white;"  data-options="region:'north',split:false, border:false">
         <form id="selectUserForm" method="post">
-        <input type="hidden"  name="role_id" value="${role_id}"/>
+        <input type="hidden"  name="roleId" value="${roleId}"/>
+        <input type="hidden"  name="queryWay" value="2" />
         <table class="searchContent">
 		<tr>
 					
@@ -192,17 +155,17 @@
 	                pagination:true,
 	                striped:true,
 	                queryParams : $('#selectUserForm').serializeObject(),
-	                 url:'${ctx}/system/listSelectUser.jhtml',
+	                 url:'${ctx}/system/user/list',
 	                fit:true,
 	                pageSize:20">
 
 						<thead>
 							<tr>
-								<th field="user_id" hidden=“true”>用户编号</th>
+								<th field="userId" hidden=“true”>用户编号</th>
 								<th data-options="field:'ck',checkbox:true"></th>
-								<th field="account" formatter="formatCellTooltip" width="30%" align="center">用户账号</th>
-								<th field="username"  formatter="formatCellTooltip" width="30%" align="center">用户名</th>
-								<th field="dept_name"  formatter="formatCellTooltip" width="30%" align="center">所属机构</th>
+								<th field="account" formatter="formatCellTooltip" width="31%" align="center">用户账号</th>
+								<th field="username"  formatter="formatCellTooltip" width="31%" align="center">用户名</th>
+								<th field="deptName"  formatter="formatCellTooltip" width="33%" align="center">所属机构</th>
 							</tr>
 						</thead>
 					</table>
@@ -214,7 +177,7 @@
 		
 	</div>
 	</div>
-	<div data-options="region:'south'" height="35px"
+	<div data-options="region:'south'" height="40px"
 			style="text-align: center; background: #F4F4F4; padding: 5px 0 0;">
 			
 		    <a class="easyui-linkbutton" data-options="iconCls:'close'" href="javascript:void(0)"
