@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.ims.system.mapper.DeptMapper">
+<mapper namespace="com.toonan.system.mapper.DeptMapper">
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="com.ims.system.model.Dept">
+    <resultMap id="BaseResultMap" type="com.toonan.system.model.Dept">
         <id column="dept_id" property="deptId" />
         <result column="cascade_id" property="cascadeId" />
         <result column="dept_name" property="deptName" />
@@ -30,7 +30,7 @@
     </sql>
 
 <!-- 根据Dto查询并返回数据持久化对象集合 -->
-	<select id="list" parameterType="Map" resultType="com.ims.system.model.Dept">
+	<select id="list" parameterType="Map" resultType="com.toonan.system.model.Dept">
 		SELECT
 			<include refid="Base_Column_List" />	
 		FROM sys_dept
@@ -43,7 +43,7 @@
 	</select>
 
 	<!-- 根据Dto查询并返回分页数据持久化对象集合 -->
-	<select id="listPage" parameterType="Map" resultType="com.ims.system.model.Dept" useCache="false">
+	<select id="listPage" parameterType="Map" resultType="com.toonan.system.model.Dept" useCache="false">
 	    SELECT
 			<include refid="Base_Column_List" />	
 		FROM sys_dept
@@ -56,7 +56,7 @@
 	</select>
 	
 	<!-- 根据Dto模糊查询并返回数据持久化对象集合(字符型字段模糊匹配，其余字段精确匹配) -->
-	<select id="like" parameterType="Map" resultType="com.ims.system.model.Dept">
+	<select id="like" parameterType="Map" resultType="com.toonan.system.model.Dept">
 		SELECT
 			<include refid="Base_Column_List" />	
 		FROM sys_dept
@@ -69,7 +69,7 @@
 	</select>
 
 	<!-- 根据Dto模糊查询并返回分页数据持久化对象集合(字符型字段模糊匹配，其余字段精确匹配) -->
-	<select id="likePage" parameterType="Map" resultType="com.ims.system.model.Dept" useCache="false">
+	<select id="likePage" parameterType="Map" resultType="com.toonan.system.model.Dept" useCache="false">
 	    SELECT
 			<include refid="Base_Column_List" />	
 		FROM sys_dept
@@ -95,7 +95,7 @@
              AND dept_id = #{deptId}  <!-- 流水号 -->
 		</if>
         <if test="cascadeId != null and cascadeId != ''">
-             AND cascade_id = #{cascadeId}  <!-- 节点语义ID -->
+             AND cascade_id LIKE  '${cascadeId}%'  <!-- 节点语义ID -->
 		</if>
         <if test="deptName != null and deptName != ''">
              AND dept_name = #{deptName}  <!-- 组织名称 -->
@@ -145,6 +145,20 @@
         <if test="updateBy != null and updateBy != ''">
              AND update_by = #{updateBy}  <!-- 修改用户ID -->
 		</if>
+		<if test="deptTypeList != null and deptTypeList.size()>0">
+				AND dept_type IN
+				<foreach item="deptTypeItem" index="index"
+					collection="deptTypeList" separator="," open="(" close=")">
+					#{deptTypeItem}
+				</foreach>
+		</if>
+		<if test="deptIdList != null and deptIdList.size()>0">
+				AND dept_id IN
+				<foreach item="deptIdItem" index="index"
+					collection="deptIdList" separator="," open="(" close=")">
+					#{deptIdItem}
+				</foreach>
+		</if>
     </sql>
 
 
@@ -155,7 +169,7 @@
 		      AND dept_id LIKE '%${deptId}%'  <!-- 流水号 -->
 		</if>
         <if test="cascadeId != null and cascadeId != ''">
-		      AND cascade_id LIKE '%${cascadeId}%'  <!-- 节点语义ID -->
+		      AND cascade_id LIKE '${cascadeId}%'  <!-- 节点语义ID -->
 		</if>
         <if test="deptName != null and deptName != ''">
 		      AND dept_name LIKE '%${deptName}%'  <!-- 组织名称 -->
@@ -195,6 +209,13 @@
 		</if>
         <if test="updateBy != null and updateBy != ''">
 		      AND update_by LIKE '%${updateBy}%'  <!-- 修改用户ID -->
+		</if>
+		<if test="deptTypeList != null and deptTypeList.size()>0">
+				AND dept_type IN
+				<foreach item="deptTypeItem" index="index"
+					collection="deptTypeList" separator="," open="(" close=")">
+					#{deptTypeItem}
+				</foreach>
 		</if>
     </sql>
 

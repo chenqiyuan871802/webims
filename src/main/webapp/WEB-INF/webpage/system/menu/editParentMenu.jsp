@@ -14,7 +14,7 @@
 					<tr>
 						<td class="kv-label">上级菜单：</td>
 						<td class="kv-content"><input  type="text" disabled="true"  value="${menu.parentId}" name="parentId"	class="easyui-combotree"
-							data-options="url:'${ctx }/system/menu/loadTree?menuType=1&parentId=0',method:'get'" required="true"
+							data-options="url:'${ctx }/system/menu/loadMenuTree?menuType=1&parentId=0',method:'get'" required="true"
 							style="width: 280px; height: 30px" ></td>
 					</tr>
 					 <tr>

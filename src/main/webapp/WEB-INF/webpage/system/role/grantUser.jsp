@@ -29,11 +29,11 @@
 		 var paramData = {};
 		 paramData.userIds=userIds;
 		 paramData.roleId=roleId;
-		 doAjax('${ctx}/system/role/saveRoleUser',paramData,'','',function(data){
-			 if (data.appcode == "1") {
+		 doAjax('${ctx}/system/role/saveRoleUser',paramData,'','','',function(data){
+			     showMsg('提示', data.appMsg);
 				 $('#userList').datagrid({});  //刷新菜单列表
 		         $('#selectUserList').datagrid({});  //刷新菜单列表
-			 }
+			 
 		 })
 	 }else{
 		 $.messager.alert('警告信息', '请选择你要授权的用户', 'warning');
@@ -51,11 +51,10 @@
 		 var paramData = {};
 		 paramData.userIds=userIds;
 		 paramData.roleId=roleId;
-		 doAjax('${ctx}/system/role/cancelRoleUser',paramData,'','',function(data){
-			 if (data.appcode == "1") {
+		 doAjax('${ctx}/system/role/removeRoleUser',paramData,'','','',function(data){
+			     showMsg('提示', data.appMsg);
 				 $('#userList').datagrid({});  //刷新菜单列表
 		         $('#selectUserList').datagrid({});  //刷新菜单列表
-			 }
 		 })
 	 }else{
 		 $.messager.alert('警告信息', '请选择你要撤销的用户', 'warning');
@@ -69,7 +68,7 @@
 		<div data-options="region:'west',collapsible:false" title="组织机构树" style="width: 180px;">
 	
 				<div data-options="region:'center',border:false">
-					  <ul id="deptTree" class="easyui-tree" data-options="url:'${ctx }/system/dept/loadTree',method:'get',animate:true,lines:true,onClick:treeOnClickQuery"></ul>
+					  <ul id="deptTree" class="easyui-tree" data-options="url:'${ctx }/system/dept/loadDeptTree',method:'get',animate:true,lines:true,onClick:treeOnClickQuery"></ul>
 				</div>
 		</div>
 		<div data-options="region:'center',border:false">
@@ -79,7 +78,7 @@
         <div  style="height:40px;background-color: white;"  data-options="region:'north',split:false, border:false">
         <form id="queryUserForm" method="post">
         <input type="hidden"  name="cascadeId" id="cascadeId" />
-        <input type="hidden"  name="queryWay" value="1" />
+         <input type="hidden"  name="outRoleId" value="${roleId}"/>
         <table class="searchContent">
 		<tr>
 					
@@ -132,8 +131,7 @@
 		<div class="easyui-layout"  data-options="fit:true">
         <div  style="height:40px;background-color: white;"  data-options="region:'north',split:false, border:false">
         <form id="selectUserForm" method="post">
-        <input type="hidden"  name="roleId" value="${roleId}"/>
-        <input type="hidden"  name="queryWay" value="2" />
+        <input type="hidden"  name="inRoleId" value="${roleId}"/>
         <table class="searchContent">
 		<tr>
 					

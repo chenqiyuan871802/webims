@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>IMS敏捷开发框架</title>
+    <title>webims</title>
    <link rel="stylesheet"
 	href="${ctx}/static/weblib/bootstrap/css/bootstrap.min.css">
 <link rel="stylesheet"
@@ -21,8 +21,8 @@
         <!--头部信息-->
         <header class="main-header">
             <a href="http://www.learun.cn/adms/index.html" target="_blank" class="logo">
-                <span class="logo-mini">IMS</span>
-                <span class="logo-lg">IMS<strong>敏捷框架</strong></span>
+                <span class="logo-mini">ERMS</span>
+                <span class="logo-lg"><strong>权限管理系统</strong></span>
             </a>
             <nav class="navbar navbar-static-top">
                 <a class="sidebar-toggle">
@@ -58,7 +58,7 @@
                                 <li><a href="javascript:void();"><i class="fa fa-trash-o"></i>清空缓存</a></li>
                                 <li><a href="javascript:void();"><i class="fa fa-paint-brush"></i>皮肤设置</a></li>
                                 <li class="divider"></li>
-                                <li><a href="${ctx}/system/login/loginout"><i class="ace-icon fa fa-power-off"></i>安全退出</a></li>
+                                <li><a href="#" onclick="logout()"><i class="ace-icon fa fa-power-off"></i>安全退出</a></li>
                             </ul>
                         </li>
                     </ul>
@@ -123,7 +123,7 @@
             </div>
             <div class="content-iframe" style="overflow: hidden;">
                 <div class="mainContent" id="content-main" style="margin-top: 0px; margin-left: 1px; margin-right: 0px; margin-bottom: 0px; padding: 0;">
-                    <iframe class="LRADMS_iframe" width="100%" height="100%" src="${ctx}/system/main/mainIndex" frameborder="0" data-id="mainIndex"></iframe>
+                    <iframe class="LRADMS_iframe" width="100%" height="100%" src="${ctx}/system/main/mainIndex?token=${token}" frameborder="0" data-id="mainIndex"></iframe>
                 </div>
             </div>
         </div>
@@ -131,6 +131,7 @@
    <script src="${ctx}/static/weblib/jquery/jQuery-2.2.0.min.js"></script>
 	<script src="${ctx}/static/weblib/bootstrap/js/bootstrap.min.js"></script>
 	<script src="${ctx}/static/webframe/js/index.js"></script>
+	<script type="text/javascript" src="${ctx}/static/common/js/webplus.js"></script>
     <script type="text/javascript">
 		$(function() {
 			var ctx = '${ctx}'
@@ -139,6 +140,12 @@
 			$.learunindex.loadMenu(ctx, data);
 			$.learuntab.init();
 		});
+		//退出清空token
+		function logout(){
+			var token=webplus.getToken();
+			webplus.removeToken() ;
+			window.location.href='${ctx}/logout?token='+token;
+		}
 	</script>
 </body>
 </html>

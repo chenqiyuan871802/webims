@@ -2,8 +2,8 @@
 <%@ include file="/WEB-INF/webpage/common/tagLibs.jsp"%>
 <head>
 <meta charset="UTF-8">
-<IMS:codeStore fields="edit_mode,status,is_auto_expand,menu_type" />
-<IMS:codeFormatter fields="edit_mode,status,is_auto_expand,menu_type" />
+<IMS:codeStore fields="edit_mode,status,is_auto_expand,menu_type,module_type" />
+<IMS:codeFormatter fields="edit_mode,status,is_auto_expand,menu_type,module_type" />
 <script type="text/javascript">
 $(function(){
 	   $('#addMenu').menu({    
@@ -27,13 +27,9 @@ $(function(){
 	}
 	//成功提交回调
 	 function submitCallBack(data){
-		 if(data.appcode == "1"){
-			 $('#cascadeId').val('');
-			 doQuery('dataList','queryForm')
-			 $("#menuTree").tree('reload');//刷新树
-			 
-		 }
-		
+		 $('#cascadeId').val('');
+		 doQuery('dataList','queryForm')
+		 $("#menuTree").tree('reload');//刷新树
 	 }
 	//修改菜单
 	  function editMenu(){
@@ -42,12 +38,7 @@ $(function(){
 	 		 var editMode=row.editMode;
 	 		 if(editMode=='1'){
 	 		   var menuId=row.menuId;
-	 		   var menuType=row.menuType;
-	 		   var win="editParentMenuWindow";
-	 		   if(menuType=='2'){
-	 			  win="editSubMenuWindow";
-	 		   }
-	 		   showWindow(win,'${ctx}/system/menu/edit?id='+menuId)
+	 		   showWindow('editMenuWindow','${ctx}/system/menu/edit?id='+menuId)
 	 		 }else{
 	 		    $.messager.alert('警告信息', '你选择的菜单数据编辑模式为只读，只读的数据不允许删除和修改', 'warning');
 	 		 }
@@ -66,7 +57,7 @@ $(function(){
 	 	          return;
 	 	     }
 	 	   var menuId=row.menuId
-	 	  doAjax('${ctx}/system/menu/remove?id='+menuId,'','你确认要删除选择的菜单数据吗？','',submitCallBack);
+	 	  doAjax('${ctx}/system/menu/remove?id='+menuId,'','你确认要删除选择的菜单数据吗？','','',submitCallBack);
 	 	}else{
 	 		$.messager.alert('警告信息','请选择你要删除的菜单数据', 'warning');
 	 	}
@@ -83,7 +74,7 @@ $(function(){
 
 				<div data-options="region:'center'">
 					<ul id="menuTree" class="easyui-tree"
-						data-options="url:'${ctx }/system/menu/loadTree.jhtml',method:'get',animate:true,lines:true,onClick:treeOnClickQuery"></ul>
+						data-options="url:'${ctx }/system/menu/loadMenuTree',method:'get',animate:true,lines:true,onClick:treeOnClickQuery"></ul>
 				</div>
 			</div>
 
@@ -136,10 +127,12 @@ $(function(){
 									align="center">菜单编码</th>
 								<th field="menuName" formatter="formatCellTooltip" width="12%"
 									align="center">菜单名称</th>
-								<th field="url" formatter="formatCellTooltip" width="30%"
+								<th field="url" formatter="formatCellTooltip" width="15%"
 									align="center">菜单URL</th>
-								<th field="menuType" formatter="menu_typeFormatter" width="8%"
+								<th field="menuType" formatter="menu_typeFormatter" width="7%"
 									align="center">菜单类型</th>
+								<th field="moduleType_dict" formatter="menu_typeFormatter" width="7%"
+									align="center">模块类型</th>
 								<th field="isAutoExpand" formatter="is_auto_expandFormatter"
 									width="8%" align="center">自动展开</th>
 								<th field="sortNo" width="7%" align="center">排序号</th>
@@ -154,40 +147,44 @@ $(function(){
 						</thead>
 					</table>
 				</div>
-				<div id="addMenu" style="width: 150px;">
+				<!-- <div id="addMenu" style="width: 150px;">
 					<div data-options="name:'addParentMenu',iconCls:'book'">新增父菜单</div>
 					<div data-options="name:'addSubMenu',iconCls:'addCatalog'">新增子菜单</div>
 
-				</div>
+				</div> -->
 				<div id="toolbar" style="padding: 2px;">
-
-					<a href="javascript:void(0);" class="easyui-menubutton" data-options="menu:'#addMenu',iconCls:'icon-add'">新增</a> 
-
+ 
+					<!-- <a href="javascript:void(0);" class="easyui-menubutton" data-options="menu:'#addMenu',iconCls:'icon-add'">新增</a>  -->
+                 <shiro:hasPermission name="system:menu:add">
+                <a href="javascript:void(0);" class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="showWindow('addMenuWindow','${ctx}/system/menu/add');">新增</a> 
+				</shiro:hasPermission>
+			<shiro:hasPermission name="system:menu:edit">
 					<a href="javascript:void(0);" class="easyui-linkbutton"
-						iconCls="icon-edit" plain="true" onclick="editMenu();">编辑</a> <a
+						iconCls="icon-edit" plain="true" onclick="editMenu();">编辑</a> 
+				</shiro:hasPermission>
+			   <shiro:hasPermission name="system:menu:remove">
+			    <a
 						href="javascript:void(0);" class="easyui-linkbutton" iconCls="icon-remove"
 						plain="true" onclick="removeMenu();">删除</a>
-
+				</shiro:hasPermission>
+				 <shiro:hasPermission name="system:menu:refreshCache">
+				<a href="javascript:void(0);" class="easyui-linkbutton"
+					iconCls="refresh" plain="true"
+					onclick="doAjax('${ctx}/system/menu/refreshCache','','你确定要重新刷新缓存吗？')">刷新缓存</a>	
+                 </shiro:hasPermission>
 				</div>
 
 			</div>
 		</div>
 	</div>
-	<div id="addParentMenuWindow" class="easyui-window" title="新增父菜单"
+	
+	<div id="addMenuWindow" class="easyui-window" title="新增菜单"
 		data-options="collapsible:false,shadow:false,minimizable:false,maximizable:false,modal:true,closed:true"
-		style="width: 500px; height: 475px; background-color: #FFFFFF"></div>
-	<div id="addSubMenuWindow" class="easyui-window" title="新增子菜单"
+		style="width: 850px; height: 450px; background-color: #FFFFFF"></div>
+	<div id="editMenuWindow" class="easyui-window" title="编辑菜单"
 		data-options="collapsible:false,shadow:false,minimizable:false,maximizable:false,modal:true,closed:true"
-		style="width: 850px; height: 475px; background-color: #FFFFFF"></div>
-	<div id="editParentMenuWindow" class="easyui-window" title="编辑父菜单"
-		data-options="collapsible:false,shadow:false,minimizable:false,maximizable:false,modal:true,closed:true"
-		style="width: 500px; height: 475px; background-color: #FFFFFF"></div>
-	<div id="editSubMenuWindow" class="easyui-window" title="编辑子菜单"
-		data-options="collapsible:false,shadow:false,minimizable:false,maximizable:false,modal:true,closed:true"
-		style="width: 850px; height: 475px; background-color: #FFFFFF"></div>
-	<div id="modifyMenuWindow" class="easyui-window" title="修改菜单"
-		data-options="collapsible:false,shadow:false,minimizable:false,maximizable:false,modal:true,closed:true"
-		style="width: 500px; height: 485px; background-color: #FFFFFF"></div>
+		style="width: 850px; height: 450px; background-color: #FFFFFF"></div>
+
 </body>
 
 

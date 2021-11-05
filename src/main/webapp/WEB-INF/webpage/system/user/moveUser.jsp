@@ -23,7 +23,7 @@
 				method="post" >
 				<input type="hidden" name="ids" value="${ids}" />
 				<input type="hidden" name="deptId" id="modeDeptId" />
-			 <ul id="deptTreeByMove" class="easyui-tree" data-options="url:'${ctx }/system/dept/loadTree',method:'get',animate:true,lines:true"></ul>
+			 <ul id="deptTreeByMove" class="easyui-tree" data-options="url:'${ctx }/system/dept/loadDeptTree',method:'get',animate:true,lines:true"></ul>
 				
 
 			</form>

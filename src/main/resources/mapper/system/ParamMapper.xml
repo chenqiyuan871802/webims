@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.ims.system.mapper.ParamMapper">
+<mapper namespace="com.toonan.system.mapper.ParamMapper">
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="com.ims.system.model.Param">
+    <resultMap id="BaseResultMap" type="com.toonan.system.model.Param">
         <id column="param_id" property="paramId" />
         <result column="param_name" property="paramName" />
         <result column="param_key" property="paramKey" />
@@ -24,7 +24,7 @@
     </sql>
 
 <!-- 根据Dto查询并返回数据持久化对象集合 -->
-	<select id="list" parameterType="Map" resultType="com.ims.system.model.Param">
+	<select id="list" parameterType="Map" resultType="com.toonan.system.model.Param">
 		SELECT
 			<include refid="Base_Column_List" />	
 		FROM sys_param
@@ -37,7 +37,7 @@
 	</select>
 
 	<!-- 根据Dto查询并返回分页数据持久化对象集合 -->
-	<select id="listPage" parameterType="Map" resultType="com.ims.system.model.Param" useCache="false">
+	<select id="listPage" parameterType="Map" resultType="com.toonan.system.model.Param" useCache="false">
 	    SELECT
 			<include refid="Base_Column_List" />	
 		FROM sys_param
@@ -50,7 +50,7 @@
 	</select>
 	
 	<!-- 根据Dto模糊查询并返回数据持久化对象集合(字符型字段模糊匹配，其余字段精确匹配) -->
-	<select id="like" parameterType="Map" resultType="com.ims.system.model.Param">
+	<select id="like" parameterType="Map" resultType="com.toonan.system.model.Param">
 		SELECT
 			<include refid="Base_Column_List" />	
 		FROM sys_param
@@ -63,7 +63,7 @@
 	</select>
 
 	<!-- 根据Dto模糊查询并返回分页数据持久化对象集合(字符型字段模糊匹配，其余字段精确匹配) -->
-	<select id="likePage" parameterType="Map" resultType="com.ims.system.model.Param" useCache="false">
+	<select id="likePage" parameterType="Map" resultType="com.toonan.system.model.Param" useCache="false">
 	    SELECT
 			<include refid="Base_Column_List" />	
 		FROM sys_param

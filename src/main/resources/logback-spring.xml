@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration scan="true" scanPeriod="60 seconds" debug="false">
 	<!--日志文件的保存路径,首先查找系统属性-Dlog.dir,如果存在就使用其；否则，在当前目录下创建名为mylogs目录做日志存放的目录 -->
-	<property name="log.path" value="/webims/logs" />
+	<property name="LOG_HOME" value="webims/logs" />
 	<!--日志输出格式 -->
 	<property name="pattern"
 		value="%d{yyyy-MM-dd HH:mm:ss} %p [Class:%C{1}->Thread:%t] %m %n" />
@@ -16,7 +16,7 @@
 		class="ch.qos.logback.core.rolling.RollingFileAppender">
 		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
 			<!--日志文件输出的文件名 -->
-			<FileNamePattern>${log.path}/ims.log.%d{yyyy-MM-dd}.log
+			<FileNamePattern>${LOG_HOME}/webims.log.%d{yyyy-MM-dd}.log
 			</FileNamePattern>
 			<!--日志文件保留天数 -->
 			<MaxHistory>30</MaxHistory>
@@ -36,7 +36,7 @@
 		class="ch.qos.logback.core.rolling.RollingFileAppender">
 		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
 			<!--日志文件输出的文件名 -->
-			<FileNamePattern>${log.path}/ims_error.log.%d{yyyy-MM-dd}.log
+			<FileNamePattern>${LOG_HOME}/webims_error.log.%d{yyyy-MM-dd}.log
 			</FileNamePattern>
 			<!--日志文件保留天数 -->
 			<MaxHistory>30</MaxHistory>
@@ -59,16 +59,16 @@
 	</appender>
 	<!-- 日志输出级别 -->
     <!-- FrameworkServlet日志-->
-    <logger level="WARN" name="org.springframework"/>
+    <logger level="INFO" name="org.springframework"/>
  
     <!-- mybatis日志打印-->
-    <logger level="DEBUG" name="org.apache.ibatis"/>
-    <logger level="DEBUG" name="java.sql"/>
+    <logger level="INFO" name="org.apache.ibatis"/>
+    <logger level="INFO" name="java.sql"/>
  
     <!--  项目 mapper 路径
             console控制台显示sql语句：STDOUT.filter.level -> debug级别
     -->
-    <logger level="DEBUG" name="com.ims.system.mapper"></logger>
+    <logger level="DEBUG" name="com.toonan.system.mapper"></logger>
 	<root level="INFO">
 		<appender-ref ref="STDOUT" />
 		<appender-ref ref="FILE" />

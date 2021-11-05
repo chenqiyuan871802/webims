@@ -4,6 +4,57 @@
 <meta charset="UTF-8">
 </head>
 <body style="margin: 0; padding: 0">
+
+<script type="text/javascript">
+//初始化JS
+$(function(){
+	var deptId='${deptId}';
+	if(deptId!=''){
+		  $('#dataRange').combotree({
+	          url: '${ctx }/system/dept/listGrantTree?grantDeptId=${deptId}',
+	          required: true,
+	          cascadeCheck : false,
+	          multiple: true,
+	          method: 'GET',
+	          onLoadSuccess:function (node) {
+	        	  $('#dataRange').combotree('setValue','${deptId}')
+	          }
+	       
+	      });
+	}
+	
+	$('#deptId').combotree({
+        url: '${ctx }/system/dept/loadDeptTree?whetherGrant=1',
+        required: true,
+        method: 'GET',
+        onSelect:function (node) {
+        	
+        	$('#dataRange').combotree("clear");
+        	var grantDeptId=node.id;
+            $('#dataRange').combotree({
+                url: '${ctx }/system/dept/listGrantTree?grantDeptId='+grantDeptId,
+                required: true,
+                cascadeCheck : false,
+                multiple: true,
+                method: 'GET',
+                onSelect:function (node) {
+                   
+                },
+                onLoadSuccess:function (node) {
+                	$('#dataRange').combotree('setValue',grantDeptId);
+                }
+             
+            });
+            
+        }
+	
+    })
+
+   
+})
+    
+
+</script>
 	<div class="easyui-layout" data-options="fit:true">
 		<div data-options="region:'center',border:false" style="padding: 5px;">
 			<form id="addDataForm" action="${ctx }/system/user/save"
@@ -12,7 +63,7 @@
 				
 					<tr>
 						<td class="kv-label">用户账号：</td>
-						<td class="kv-content"><input  type="text"  name="account"	class="easyui-textbox" required="true" data-options="validType:'account'" style="width: 250px; height: 30px" ></td>
+						<td class="kv-content"><input  type="text"  name="account"	class="easyui-textbox" required="true" data-options="validType:'loginname'" style="width: 250px; height: 30px" ></td>
 						<td class="kv-label">用户名：</td>
 						<td class="kv-content"><input  type="text"  name="username"	class="easyui-textbox" required="true" data-options="validType:'length[1,50]'" style="width: 250px; height: 30px" ></td>
 					</tr>
@@ -24,8 +75,8 @@
 					</tr>
 					<tr>
 						<td class="kv-label">所属机构：</td>
-						<td class="kv-content"><input  type="text"  name="deptId" value="${deptId}"	class="easyui-combotree"
-							data-options="url:'${ctx }/system/dept/loadTree',method:'get'" required="true"
+						<td class="kv-content"><input  type="text"  id="deptId" name="deptId" value="${deptId}"	class="easyui-combotree"
+					 required="true"
 							style="width: 250px; height: 30px" ></td>
 						<td class="kv-label">性别：</td>
 						<td class="kv-content"><input type="text"  name="sex"	 editable="false"  value="3"
@@ -38,11 +89,16 @@
 						<td class="kv-content"><input  type="text"   name="email"	class="easyui-textbox" validType="email" style="width: 250px; height: 30px" ></td>
 					</tr>
 					<tr>
+						<td class="kv-label">数据范围：</td>
+						<td colspan="3" class="kv-content"><input type="text"  name="dataRange" id="dataRange"	class="easyui-combotree" required="true" style="width: 650px; height: 30px" ></td>
+						
+					</tr>
+					<!-- <tr>
 						<td class="kv-label">QQ：</td>
 						<td class="kv-content"><input type="text"  name="qq"	class="easyui-textbox"  data-options="validType:'QQ'" style="width: 250px; height: 30px" ></td>
 						<td class="kv-label">微信：</td>
 						<td class="kv-content"><input  type="text"   name="wechat"	class="easyui-textbox" validType="wbchat" style="width: 250px; height: 30px" ></td>
-					</tr>
+					</tr> -->
 					 <tr>
 						<td class="kv-label">证件号：</td>
 						<td class="kv-content"><input  type="text"   name="idno"	class="easyui-textbox" validType="idcard" style="width: 250px; height: 30px" ></td>

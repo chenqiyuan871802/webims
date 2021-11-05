@@ -54,7 +54,7 @@
 			 <input type="hidden"  name="parentId" id="parentId"  value="${dept.parentId}"/>
 			<input type="hidden"  name="deptId" id="deptId" value="${dept.deptId}" />
 			<input type="hidden"  id="parentIdOld" name="parentIdOld" value="${dept.parentId}" />
-			 <ul id="deptTreeByMove" class="easyui-tree" data-options="url:'${ctx }/system/dept/loadTree',method:'get',onLoadSuccess:lockParentNode,onClick:treeOnClickCheck,animate:true,lines:true">
+			 <ul id="deptTreeByMove" class="easyui-tree" data-options="url:'${ctx }/system/dept/loadDeptTree',method:'get',onLoadSuccess:lockParentNode,onClick:treeOnClickCheck,animate:true,lines:true">
 			 
 			 </ul>
 				

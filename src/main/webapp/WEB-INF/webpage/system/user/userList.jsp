@@ -16,7 +16,7 @@
  //新增用户
  function addUser(){
   var treeNode= $("#deptTree").tree('getSelected')
-  var deptId="0";
+  var deptId='';
    if(treeNode){
 	   deptId=treeNode.id
    }
@@ -30,7 +30,7 @@
 		 <div class="easyui-layout" data-options="fit:true">
 				
 				<div data-options="region:'center'">
-					  <ul id="deptTree" class="easyui-tree" data-options="url:'${ctx }/system/dept/loadTree',method:'get',animate:true,lines:true,onClick:treeOnClickQuery"></ul>
+					  <ul id="deptTree" class="easyui-tree" data-options="url:'${ctx }/system/dept/loadDeptTree',method:'get',animate:true,lines:true,onClick:treeOnClickQuery"></ul>
 				</div>
 			</div>
 		
@@ -129,21 +129,38 @@
 					</table>
 				</div>
 				<div id="toolbar" style="padding: 2px;">
-
-					<a href="#" class="easyui-linkbutton" iconCls="icon-add"
+                   <shiro:hasPermission name="system:user:add">
+					<a  shiro:hasPermission="system:user:add" href="#" class="easyui-linkbutton" iconCls="icon-add"
 						plain="true"
 						onclick="addUser()">新增</a>
-
-					<a href="javascript:void(0);" class="easyui-linkbutton"
+                  </shiro:hasPermission>
+                  <shiro:hasPermission name="system:user:edit">
+					<a   href="javascript:void(0);" class="easyui-linkbutton"
 						iconCls="icon-edit" plain="true"
-						onclick="editGridData('editDataWindow','dataList','userId','${ctx}/system/user/edit','请选择你要编辑的用户信息');">编辑</a> 
-				    <a href="#" class="easyui-linkbutton" iconCls="password_reset"
-		 	               plain="true" onclick="editGridData('resetPasswordWindow','dataList','userId','${ctx}/system/user/resetPassword','请选择你要重置密码的用户');">密码重置</a>
-				   <a href="#" class="easyui-linkbutton" iconCls="user_move"
-			               plain="true" onclick="showMoreGridData('moveUserWindow','dataList','userId','${ctx}/system/user/moveUser','请选择你要移动的用户');">移动用户</a>
-				    <a href="#"
+						onclick="editGridData('${ctx}/system/user/edit','editDataWindow','dataList','userId','请选择你要编辑的用户信息');">编辑</a> 
+				 </shiro:hasPermission>
+				 <shiro:hasPermission name="system:user:resetPassword">
+				    <a   href="#" class="easyui-linkbutton" iconCls="password_reset"
+		 	               plain="true" onclick="editGridData('${ctx}/system/user/resetPassword','resetPasswordWindow','dataList','userId','请选择你要重置密码的用户');">密码重置</a>
+		 	     </shiro:hasPermission>
+			<%-- 	   <a shiro:hasAllPermissions="system:user:add"  href="#" class="easyui-linkbutton" iconCls="user_move"
+			               plain="true" onclick="showMoreGridData('${ctx}/system/user/moveUser','moveUserWindow','dataList','userId','请选择你要移动的用户');">移动用户</a> --%>
+				
+				 <shiro:hasPermission name="system:user:remove">
+				    <a    href="#"
 						class="easyui-linkbutton" iconCls="icon-remove" plain="true"
-						onclick="batchRemoveGridData('dataList','userId','${ctx}/system/user/batchRemove','请选择你删除的用户信息','你确认要删除选择的用户信息吗');">删除</a> 
+						onclick="batchRemoveGridData('${ctx}/system/user/batchRemove','dataList','userId','请选择你删除的用户信息','你确认要删除选择的用户信息吗');">删除</a> 
+			     </shiro:hasPermission>
+			       <%-- <shiro:hasPermission name="system:user:syncLsUser">
+			        <a   href="javascript:void(0);" class="easyui-linkbutton"
+					iconCls="down" plain="true"
+					onclick="doAjax('${ctx}/system/user/syncLsUser','','你确定同步来穗用户信息吗？','','dataList')">同步来穗用户</a>
+                   </shiro:hasPermission> --%>
+                  <shiro:hasPermission name="system:user:refreshCache">
+                  <a   href="javascript:void(0);" class="easyui-linkbutton"
+					iconCls="refresh" plain="true"
+					onclick="doAjax('${ctx}/system/user/refreshCache','','你确定要重新刷新缓存吗？')">刷新缓存</a>	
+			      </shiro:hasPermission>
 				</div>
 
 			</div>

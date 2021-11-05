@@ -23,12 +23,10 @@
  }
  //成功提交回调
  function submitCallBack(data){
-	 if(data.appcode == "1"){
+	 
 		 $('#cascadeId').val('');
 		 doQuery('dataList','queryForm')
 		 $("#deptTree").tree('reload');//刷新树
-		 
-	 }
 	
  }
   //删除组织机构
@@ -42,11 +40,10 @@
  			$.messager.alert('警告信息','顶级机构不能进行移动和删除操作，只能进行修改', 'warning');
  			return;
  		 }
- 		removeGridData('dataList','deptId','${ctx}/system/dept/remove',
+ 		removeGridData('${ctx}/system/dept/remove','dataList','deptId',
  				'组织机构是基础数据，删除组织机构将同时删除下属的用户，请慎重，你确认要删除选择的组织机构数据吗？','','',function(data){
- 			if(data.appcode=="1"){
- 				$("#deptTree").tree('reload');//刷新树
- 			}
+ 			submitCallBack(data);
+ 			
  		})
  		
  	}else{
@@ -82,7 +79,7 @@
 		 <div class="easyui-layout" data-options="fit:true">
 				
 				<div data-options="region:'center'">
-					  <ul id="deptTree" class="easyui-tree" data-options="url:'${ctx }/system/dept/loadTree',method:'get',animate:true,lines:true,onClick:treeOnClickQuery"></ul>
+					  <ul id="deptTree" class="easyui-tree" data-options="url:'${ctx }/system/dept/loadDeptTree',method:'get',animate:true,lines:true,onClick:treeOnClickQuery"></ul>
 				</div>
 			</div>
 		
@@ -147,21 +144,35 @@
 					</table>
 				</div>
 				<div id="toolbar" style="padding: 2px;">
-
+               <shiro:hasPermission name="system:dept:add">
 					<a href="#" class="easyui-linkbutton" iconCls="icon-add"
 						plain="true"
 						onclick="addDept()">新增</a>
-
+				</shiro:hasPermission>
+               <shiro:hasPermission name="system:dept:edit">
 					<a href="javascript:void(0);" class="easyui-linkbutton"
 						iconCls="icon-edit" plain="true"
-						onclick="editGridData('editDataWindow','dataList','deptId','${ctx}/system/dept/edit','请选择你要修改的组织机构信息');">编辑</a> 
-					<a href="javascript:void(0);" class="easyui-linkbutton"
+						onclick="editGridData('${ctx}/system/dept/edit','editDataWindow','dataList','deptId','请选择你要修改的组织机构信息');">编辑</a> 
+			    </shiro:hasPermission>
+					<!-- <a href="javascript:void(0);" class="easyui-linkbutton"
 						iconCls="dept_move" plain="true"
-						onclick="moveDept();">移动机构</a> 
-						<a href="#"
+						onclick="moveDept();">移动机构</a>  -->
+				
+				<shiro:hasPermission name="system:dept:remove">
+				 <a href="#"
 						class="easyui-linkbutton" iconCls="icon-remove" plain="true"
 						onclick="removeDept();">删除</a> 
-
+                  </shiro:hasPermission>
+                   <%-- <shiro:hasPermission name="system:dept:syncXzdz">
+                 <a href="javascript:void(0);" class="easyui-linkbutton"
+					iconCls="down" plain="true"
+					onclick="doAjax('${ctx}/system/dept/syncXzdz','','你确定要重新同步行政地址吗？','','',submitCallBack)">同步行政地址</a>
+                  </shiro:hasPermission> --%>
+                  <shiro:hasPermission name="system:dept:refreshCache">
+                  <a href="javascript:void(0);" class="easyui-linkbutton"
+					iconCls="refresh" plain="true"
+					onclick="doAjax('${ctx}/system/dept/refreshCache','','你确定要重新刷新缓存吗？')">刷新缓存</a>
+					</shiro:hasPermission>
 				</div>
 
 			</div>

@@ -4,6 +4,60 @@
 <meta charset="UTF-8">
 </head>
 <body style="margin: 0; padding: 0">
+<script type="text/javascript">
+//初始化JS
+$(function(){
+	$('#editDataRange').combotree({
+        url: '${ctx }/system/dept/listGrantTree?grantDeptId=${user.deptId}',
+        required: true,
+        cascadeCheck : false,
+        multiple: true,
+        method: 'GET',
+        onLoadSuccess:function (node) {
+        	var dataRange= '${user.dataRange}'
+        	var rangeArray=dataRange.split(",");
+        	var valueArr = new Array();
+        	for(var i=0;i<rangeArray.length;i++){
+        		
+        		valueArr.push(rangeArray[i]);
+        		
+        	}
+        	$('#editDataRange').combotree('setValue',valueArr)
+        }
+     
+    });
+	$('#editDeptId').combotree({
+      url: '${ctx }/system/dept/loadDeptTree?whetherGrant=1',
+      required: true,
+      method: 'GET',
+      onSelect:function (node) {
+      	
+      	$('#editDataRange').combotree("clear");
+      	var grantDeptId=node.id;
+          $('#editDataRange').combotree({
+              url: '${ctx }/system/dept/listGrantTree?grantDeptId='+grantDeptId,
+              required: true,
+              cascadeCheck : false,
+              multiple: true,
+              method: 'GET',
+              onSelect:function (node) {
+                 
+              },
+              onLoadSuccess:function (node) {
+              	$('#editDataRange').combotree('setValue',grantDeptId);
+              }
+           
+          });
+          
+      }
+	
+  })
+
+   
+})
+    
+
+</script>
 	<div class="easyui-layout" data-options="fit:true">
 		<div data-options="region:'center',border:false" style="padding: 5px;">
 			<form id="editDataForm" action="${ctx }/system/user/update"
@@ -20,8 +74,8 @@
 					
 					<tr>
 						<td class="kv-label">所属机构：</td>
-						<td class="kv-content"><input  type="text"  name="deptId" value="${user.deptId}"	class="easyui-combotree"
-							data-options="url:'${ctx }/system/dept/loadTree',method:'get'" required="true"
+						<td class="kv-content"><input  type="text" id="editDeptId"  name="deptId" value="${user.deptId}"	class="easyui-combotree"
+							data-options="url:'${ctx }/system/dept/loadDeptTree',method:'get'" required="true"
 							style="width: 250px; height: 30px" ></td>
 						<td class="kv-label">性别：</td>
 						<td class="kv-content"><input type="text"  name="sex"	 editable="false"  value="${user.sex}"
@@ -33,11 +87,16 @@
 						<td class="kv-label">邮箱：</td>
 						<td class="kv-content"><input  type="text"   name="email" value="${user.email }"	class="easyui-textbox" validType="email" style="width: 250px; height: 30px" ></td>
 					</tr>
-					<tr>
+					<%-- <tr>
 						<td class="kv-label">QQ：</td>
 						<td class="kv-content"><input type="text"  name="qq"	value="${user.qq}" class="easyui-textbox"  data-options="validType:'QQ'" style="width: 250px; height: 30px" ></td>
 						<td class="kv-label">微信：</td>
 						<td class="kv-content"><input  type="text"   name="wechat" value="${user.wechat}"	class="easyui-textbox" validType="wbchat" style="width: 250px; height: 30px" ></td>
+					</tr> --%>
+					<tr>
+						<td class="kv-label">数据范围：</td>
+						<td colspan="3" class="kv-content"><input type="text"  name="dataRange" id="editDataRange"	required="true" style="width: 650px; height: 30px" ></td>
+						
 					</tr>
 					 <tr>
 						<td class="kv-label">证件号：</td>

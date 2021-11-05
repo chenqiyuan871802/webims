@@ -3,16 +3,16 @@
 <head>
 <meta charset="UTF-8">
 <IMS:codeStore fields="edit_mode,status,param_type" />
-<IMS:codeFormatter fields="edit_mode,status,param_type" />
 <script type="text/javascript">
 function editParam(){
 	  var row= $('#dataList').datagrid('getSelected');
 	   if(row!=null){
 	 		 var rowValue= row['editMode'];
-	 		 if(rowValue=='0'){
+	 		 var account=webplus.getName("account");
+	 		 if(rowValue=='0'&&account!='super'){
 	 			$.messager.alert('警告信息', '你当前选择键值参数数据为只读，只读数据不允许删除和修改', 'warning'); 
 	 		 }else{
-	 			editGridData('editDataWindow','dataList','paramId','${ctx}/system/param/edit','请选择你要编辑键值参数数据'); 
+	 			editGridData('${ctx}/system/param/edit','editDataWindow','dataList','paramId','请选择你要编辑键值参数数据'); 
 	 		 }
 	 		
 	 	 }else{
@@ -75,7 +75,7 @@ function editParam(){
 
 				<thead>
 					<tr>
-						<th field="param_id" hidden=“true”>参数编号</th>
+						<th field="paramId" hidden=“true”>参数编号</th>
 						<th data-options="field:'ck',checkbox:true"></th>
 						<th field="paramName" formatter="formatCellTooltip" width="15%"
 							align="center">参数名称</th>
@@ -85,32 +85,35 @@ function editParam(){
 							align="center">参数值</th>
 						<th field="paramRemark" formatter="formatCellTooltip" width="20%"
 							align="center">备注</th>
-						<th field="paramType" width="10%" formatter="param_typeFormatter"
+						<th field="paramType_dict" width="10%" 
 							align="center">参数分类</th>
-						<th field="status" formatter="statusFormatter" width="7%"
+						<th field="status_dict" width="7%"
 							align="center">当前状态</th>
-						<th field="editMode" formatter="edit_modeFormatter" width="7%"
+						<th field="editMode_dict"  width="7%"
 							align="center">编辑模式</th>
 
 					</tr>
 				</thead>
 			</table>
 			<div id="toolbar" style="padding: 2px;">
-
+                <shiro:hasPermission name="system:param:add">
 				<a href="javascript:void(0);" class="easyui-linkbutton"
 					iconCls="icon-add" plain="true" onclick="showWindow('addDataWindow','${ctx}/system/param/add');">新增</a> 
-					
+				</shiro:hasPermission>
+				<shiro:hasPermission name="system:param:edit">	
 				<a href="javascript:void(0);" class="easyui-linkbutton"
 					iconCls="icon-edit" plain="true" onclick="editParam();">编辑</a>
+				</shiro:hasPermission>
+			   <shiro:hasPermission name="system:param:remove">
 			   <a  href="javascript:void(0);" class="easyui-linkbutton"
 				  iconCls="icon-remove" plain="true"
-				   onclick="removeGridData('dataList','paramId','${ctx}/system/param/remove','请选择你要删除键值参数信息','你确认要删除选择的键值参数信息吗？');">删除</a>
+				   onclick="removeGridData('${ctx}/system/param/remove','dataList','paramId','请选择你要删除键值参数信息','你确认要删除选择的键值参数信息吗？');">删除</a>
+				</shiro:hasPermission>
+				<shiro:hasPermission name="system:param:refreshParam">
 				<a href="javascript:void(0);" class="easyui-linkbutton"
 					iconCls="refresh" plain="true"
 					onclick="doAjax('${ctx}/system/param/refreshParam','','你确定要重新刷新键值参数缓存吗？')">刷新缓存</a>
-				<a href="javascript:void(0);" class="easyui-linkbutton"
-					iconCls="close" plain="true"
-					onclick="doAjax('${ctx}/system/param/flushParam','','你确定清空键值参数缓存吗？')">清空缓存</a>
+				</shiro:hasPermission>
 			</div>
 
 		</div>

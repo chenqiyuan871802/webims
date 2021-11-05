@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.toonan.system.mapper.LogMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.toonan.system.model.Log">
+        <id column="log_id" property="logId" />
+        <result column="content" property="content" />
+        <result column="log_type" property="logType" />
+        <result column="create_time" property="createTime" />
+        <result column="method" property="method" />
+        <result column="user_id" property="userId" />
+        <result column="user_name" property="userName" />
+        <result column="ip" property="ip" />
+        <result column="params" property="params" />
+        <result column="response_time" property="responseTime" />
+        <result column="description" property="description" />
+    </resultMap>
+    
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+    log_id AS logId,content AS content,log_type AS logType,create_time AS createTime,method AS method,user_id AS userId,user_name AS userName,ip AS ip,params AS params,response_time AS responseTime,description AS description
+    </sql>
+
+<!-- 根据Dto查询并返回数据持久化对象集合 -->
+	<select id="list" parameterType="Map" resultType="com.toonan.system.model.Log">
+		SELECT
+			<include refid="Base_Column_List" />	
+		FROM sys_log
+		<where>
+		    <include refid="equal" />
+		</where>
+		<if test="_order != null and _order != ''">
+		     ORDER BY ${_order}
+		</if>			
+	</select>
+
+	<!-- 根据Dto查询并返回分页数据持久化对象集合 -->
+	<select id="listPage" parameterType="Map" resultType="com.toonan.system.model.Log" useCache="false">
+	    SELECT
+			<include refid="Base_Column_List" />	
+		FROM sys_log
+		<where>
+		    <include refid="equal" />
+		</where>	
+		<if test="_order != null and _order != ''">
+		     ORDER BY ${_order}
+		</if>		
+	</select>
+	
+	<!-- 根据Dto模糊查询并返回数据持久化对象集合(字符型字段模糊匹配，其余字段精确匹配) -->
+	<select id="like" parameterType="Map" resultType="com.toonan.system.model.Log">
+		SELECT
+			<include refid="Base_Column_List" />	
+		FROM sys_log
+		<where>
+		    <include refid="like" />
+		</where>
+		<if test="_order != null and _order != ''">
+		     ORDER BY ${_order}
+		</if>			
+	</select>
+
+	<!-- 根据Dto模糊查询并返回分页数据持久化对象集合(字符型字段模糊匹配，其余字段精确匹配) -->
+	<select id="likePage" parameterType="Map" resultType="com.toonan.system.model.Log" useCache="false">
+	    SELECT
+			<include refid="Base_Column_List" />	
+		FROM sys_log
+		<where>
+		    <include refid="like" />
+		</where>
+		<if test="_order != null and _order != ''">
+		     ORDER BY ${_order}
+		</if>			
+	</select>
+	<!-- 根据数学表达式进行数学运算 -->
+	<select id="calc" parameterType="Map" resultType="String">
+		SELECT
+			${_expr}
+		FROM sys_log
+		<where>
+		    <include refid="equal" />
+		</where>
+	</select>
+    <!-- Where精确匹配字段 -->
+    <sql id="equal">
+        <if test="logId != null and logId != ''">
+             AND log_id = #{logId}  <!-- 日志编号 -->
+		</if>
+        <if test="content != null and content != ''">
+             AND content = #{content}  <!-- 日志内容 -->
+		</if>
+        <if test="logType != null and logType != ''">
+             AND log_type = #{logType}  <!-- 日志操作类型 0缺省1登陆2退出3查询4更新5删除 -->
+		</if>
+        <if test="createTime != null ">
+             AND create_time = #{createTime}  <!-- 创建时间 -->
+		</if>
+        <if test="method != null and method != ''">
+             AND method = #{method}  <!-- 请求方法 -->
+		</if>
+        <if test="userId != null and userId != ''">
+             AND user_id = #{userId}  <!-- 操作用户编号 -->
+		</if>
+        <if test="userName != null and userName != ''">
+             AND user_name = #{userName}  <!-- 操作用户名称 -->
+		</if>
+        <if test="ip != null and ip != ''">
+             AND ip = #{ip}  <!-- ip地址 -->
+		</if>
+        <if test="params != null and params != ''">
+             AND params = #{params}  <!-- 请求参数 -->
+		</if>
+        <if test="responseTime != null ">
+             AND response_time = #{responseTime}  <!-- 响应时间 -->
+		</if>
+        <if test="description != null and description != ''">
+             AND description = #{description}  <!-- 描述 -->
+		</if>
+    </sql>
+
+
+
+    <!-- Where模糊匹配字段 -->
+    <sql id="like">
+        <if test="logId != null and logId != ''">
+		      AND log_id LIKE '%${logId}%'  <!-- 日志编号 -->
+		</if>
+        <if test="content != null and content != ''">
+		      AND content LIKE '%${content}%'  <!-- 日志内容 -->
+		</if>
+        <if test="logType != null and logType != ''">
+		      AND log_type=#{logType}
+		</if>
+        <if test="method != null and method != ''">
+		      AND method LIKE '%${method}%'  <!-- 请求方法 -->
+		</if>
+        <if test="userId != null and userId != ''">
+		      AND user_id=#{userId}
+		</if>
+        <if test="userName != null and userName != ''">
+		      AND user_name LIKE '%${userName}%'  <!-- 操作用户名称 -->
+		</if>
+        <if test="ip != null and ip != ''">
+		      AND ip LIKE '%${ip}%'  <!-- ip地址 -->
+		</if>
+        <if test="params != null and params != ''">
+		      AND params LIKE '%${params}%'  <!-- 请求参数 -->
+		</if>
+        <if test="description != null and description != ''">
+		      AND description LIKE '%${description}%'  <!-- 描述 -->
+		</if>
+		  <if test="description != null and description != ''">
+		      AND description LIKE '${description}%'  <!-- 描述 -->
+		</if>
+		<if test="beginDate != null and beginDate != ''">
+				AND create_time &gt;=#{beginDate}
+		 </if>
+		<if test="endDate!= null and endDate != ''">
+			AND create_time &lt;#{endDate}
+		</if>
+    </sql>
+
+</mapper>

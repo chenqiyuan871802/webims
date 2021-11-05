@@ -1,0 +1,10 @@
+function ${field}Formatter(value) {
+  #if($codeList.size()>0)
+  #foreach($code in $codeList)
+  	if (value == '${code.itemCode}') return '${code.itemName}' ;
+  #end 
+    else return value;
+  #else
+  return value;
+  #end
+}

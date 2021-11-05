@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.ims.system.mapper.MenuMapper">
+<mapper namespace="com.toonan.system.mapper.MenuMapper">
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="com.ims.system.model.Menu">
+    <resultMap id="BaseResultMap" type="com.toonan.system.model.Menu">
         <id column="menu_id" property="menuId" />
         <result column="cascade_id" property="cascadeId" />
         <result column="menu_name" property="menuName" />
@@ -21,15 +21,16 @@
         <result column="create_by" property="createBy" />
         <result column="update_time" property="updateTime" />
         <result column="update_by" property="updateBy" />
+        <result column="module_type" property="moduleType" />
     </resultMap>
     
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        menu_id AS menuId, cascade_id AS cascadeId, menu_name AS menuName, menu_code AS menuCode, menu_type AS menuType, parent_id AS parentId, icon_name AS iconName, is_auto_expand AS isAutoExpand, url, remark, status, edit_mode AS editMode, sort_no AS sortNo, create_time AS createTime, create_by AS createBy, update_time AS updateTime, update_by AS updateBy
+        menu_id AS menuId, cascade_id AS cascadeId, menu_name AS menuName, menu_code AS menuCode, menu_type AS menuType, parent_id AS parentId, icon_name AS iconName, is_auto_expand AS isAutoExpand, url, remark, status, edit_mode AS editMode, sort_no AS sortNo, create_time AS createTime, create_by AS createBy, update_time AS updateTime, update_by AS updateBy, module_type AS moduleType
     </sql>
 
 <!-- 根据Dto查询并返回数据持久化对象集合 -->
-	<select id="list" parameterType="Map" resultType="com.ims.system.model.Menu">
+	<select id="list" parameterType="Map" resultType="com.toonan.system.model.Menu">
 		SELECT
 			<include refid="Base_Column_List" />	
 		FROM sys_menu
@@ -42,7 +43,7 @@
 	</select>
 
 	<!-- 根据Dto查询并返回分页数据持久化对象集合 -->
-	<select id="listPage" parameterType="Map" resultType="com.ims.system.model.Menu" useCache="false">
+	<select id="listPage" parameterType="Map" resultType="com.toonan.system.model.Menu" useCache="false">
 	    SELECT
 			<include refid="Base_Column_List" />	
 		FROM sys_menu
@@ -55,7 +56,7 @@
 	</select>
 	
 	<!-- 根据Dto模糊查询并返回数据持久化对象集合(字符型字段模糊匹配，其余字段精确匹配) -->
-	<select id="like" parameterType="Map" resultType="com.ims.system.model.Menu">
+	<select id="like" parameterType="Map" resultType="com.toonan.system.model.Menu">
 		SELECT
 			<include refid="Base_Column_List" />	
 		FROM sys_menu
@@ -68,7 +69,7 @@
 	</select>
 
 	<!-- 根据Dto模糊查询并返回分页数据持久化对象集合(字符型字段模糊匹配，其余字段精确匹配) -->
-	<select id="likePage" parameterType="Map" resultType="com.ims.system.model.Menu" useCache="false">
+	<select id="likePage" parameterType="Map" resultType="com.toonan.system.model.Menu" useCache="false">
 	    SELECT
 			<include refid="Base_Column_List" />	
 		FROM sys_menu
@@ -103,7 +104,7 @@
              AND menu_code = #{menuCode}  <!-- 菜单编码 -->
 		</if>
         <if test="menuType != null and menuType != ''">
-             AND menu_type = #{menuType}  <!-- 菜单类型 1父级菜单2子菜单3按钮 -->
+             AND menu_type = #{menuType}  <!-- 菜单类型 1系统菜单2app菜单 -->
 		</if>
         <if test="parentId != null and parentId != ''">
              AND parent_id = #{parentId}  <!-- 菜单父级编号 -->
@@ -141,6 +142,23 @@
         <if test="updateBy != null and updateBy != ''">
              AND update_by = #{updateBy}  <!-- 更新用户 -->
 		</if>
+        <if test="moduleType != null and moduleType != ''">
+             AND module_type = #{moduleType}  <!-- 模块类型 1父级菜单2子菜单3按钮 -->
+		</if>
+		<if test="moduleTypeList != null and moduleTypeList.size()>0">
+				AND module_type IN
+				<foreach item="moduleTypeItem" index="index"
+					collection="moduleTypeList" separator="," open="(" close=")">
+					#{moduleTypeItem}
+				</foreach>
+		</if>
+		<if test="menuTypeList != null and menuTypeList.size()>0">
+				AND menu_type IN
+				<foreach item="menuTypeItem" index="index"
+					collection="menuTypeList" separator="," open="(" close=")">
+					#{menuTypeItem}
+				</foreach>
+		</if>
     </sql>
 
 
@@ -160,7 +178,7 @@
 		      AND menu_code LIKE '%${menuCode}%'  <!-- 菜单编码 -->
 		</if>
         <if test="menuType != null and menuType != ''">
-		      AND menu_type LIKE '%${menuType}%'  <!-- 菜单类型 1父级菜单2子菜单3按钮 -->
+		      AND menu_type LIKE '%${menuType}%'  <!-- 菜单类型 1系统菜单2app菜单 -->
 		</if>
         <if test="parentId != null and parentId != ''">
 		      AND parent_id LIKE '%${parentId}%'  <!-- 菜单父级编号 -->
@@ -188,6 +206,9 @@
 		</if>
         <if test="updateBy != null and updateBy != ''">
 		      AND update_by LIKE '%${updateBy}%'  <!-- 更新用户 -->
+		</if>
+        <if test="moduleType != null and moduleType != ''">
+		      AND module_type LIKE '%${moduleType}%'  <!-- 模块类型 1父级菜单2子菜单3按钮 -->
 		</if>
     </sql>
 

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.ims.system.mapper.RoleMapper">
+<mapper namespace="com.toonan.system.mapper.RoleMapper">
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="com.ims.system.model.Role">
+    <resultMap id="BaseResultMap" type="com.toonan.system.model.Role">
         <id column="role_id" property="roleId" />
         <result column="role_name" property="roleName" />
         <result column="status" property="status" />
@@ -22,7 +22,7 @@
     </sql>
 
 <!-- 根据Dto查询并返回数据持久化对象集合 -->
-	<select id="list" parameterType="Map" resultType="com.ims.system.model.Role">
+	<select id="list" parameterType="Map" resultType="com.toonan.system.model.Role">
 		SELECT
 			<include refid="Base_Column_List" />	
 		FROM sys_role
@@ -35,7 +35,7 @@
 	</select>
 
 	<!-- 根据Dto查询并返回分页数据持久化对象集合 -->
-	<select id="listPage" parameterType="Map" resultType="com.ims.system.model.Role" useCache="false">
+	<select id="listPage" parameterType="Map" resultType="com.toonan.system.model.Role" useCache="false">
 	    SELECT
 			<include refid="Base_Column_List" />	
 		FROM sys_role
@@ -48,7 +48,7 @@
 	</select>
 	
 	<!-- 根据Dto模糊查询并返回数据持久化对象集合(字符型字段模糊匹配，其余字段精确匹配) -->
-	<select id="like" parameterType="Map" resultType="com.ims.system.model.Role">
+	<select id="like" parameterType="Map" resultType="com.toonan.system.model.Role">
 		SELECT
 			<include refid="Base_Column_List" />	
 		FROM sys_role
@@ -61,7 +61,7 @@
 	</select>
 
 	<!-- 根据Dto模糊查询并返回分页数据持久化对象集合(字符型字段模糊匹配，其余字段精确匹配) -->
-	<select id="likePage" parameterType="Map" resultType="com.ims.system.model.Role" useCache="false">
+	<select id="likePage" parameterType="Map" resultType="com.toonan.system.model.Role" useCache="false">
 	    SELECT
 			<include refid="Base_Column_List" />	
 		FROM sys_role

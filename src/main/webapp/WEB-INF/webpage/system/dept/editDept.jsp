@@ -49,13 +49,13 @@ function selectParentDept(treeNode){
 						<td class="kv-label">上级机构：</td>
 						<td class="kv-content"><input  type="text" id="parentTree" name="parentId"  <c:if test="${dept.deptId=='0'}">disabled="true" value="0" </c:if>   <c:if test="${dept.deptId!='0'}"> value="${dept.parentId }"  </c:if>	
 						class="easyui-combotree"
-							data-options="url:'${ctx }/system/dept/loadTree',method:'get',onSelect:selectParentDept" required="true"
+							data-options="url:'${ctx }/system/dept/loadDeptTree',method:'get',onSelect:selectParentDept" required="true"
 							style="width: 250px; height: 30px" ></td>
 					</tr>
 				  
 					<tr>
 						<td class="kv-label">机构代码：</td>
-						<td class="kv-content"><input name="dept_code" type="text" value="${dept.deptCode }"
+						<td class="kv-content"><input name="deptCode" type="text" value="${dept.deptCode }"
 							class="easyui-textbox" data-options="validType:'length[0,50]'"
 							style="width: 250px; height: 30px" ></td>
 						<td class="kv-label">主要负责人：</td>

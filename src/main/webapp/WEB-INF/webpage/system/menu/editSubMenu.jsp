@@ -14,7 +14,7 @@
 					<tr>
 						<td class="kv-label">上级菜单：</td>
 						<td class="kv-content"><input  type="text"  disabled="true" name="parentId"	class="easyui-combotree" value="${menu.parentId}"
-							data-options="url:'${ctx }/system/menu/loadTree?menuType=1',method:'get'," required="true"
+							data-options="url:'${ctx }/system/menu/loadMenuTree?menuType=1',method:'get'," required="true"
 							style="width: 250px; height: 30px" ></td>
 						<td class="kv-label">自动展开：</td>
 						<td class="kv-content"><input name="isAutoExpand" type="text" value="${menu.isAutoExpand}"  editable="false" 

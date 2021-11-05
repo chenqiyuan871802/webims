@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.ims.system.mapper.UserMapper">
+<mapper namespace="com.toonan.system.mapper.UserMapper">
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="com.ims.system.model.User">
+    <resultMap id="BaseResultMap" type="com.toonan.system.model.User">
         <id column="user_id" property="userId" />
         <result column="account" property="account" />
         <result column="password" property="password" />
@@ -39,7 +39,7 @@
     </sql>
 
 <!-- 根据Dto查询并返回数据持久化对象集合 -->
-	<select id="list" parameterType="Map" resultType="com.ims.system.model.User">
+	<select id="list" parameterType="Map" resultType="com.toonan.system.model.User">
 		SELECT
 			<include refid="Base_Column_List" />	
 		FROM sys_user
@@ -52,7 +52,7 @@
 	</select>
 
 	<!-- 根据Dto查询并返回分页数据持久化对象集合 -->
-	<select id="listPage" parameterType="Map" resultType="com.ims.system.model.User" useCache="false">
+	<select id="listPage" parameterType="Map" resultType="com.toonan.system.model.User" useCache="false">
 	    SELECT
 			<include refid="Base_Column_List" />	
 		FROM sys_user
@@ -65,7 +65,7 @@
 	</select>
 	
 	<!-- 根据Dto模糊查询并返回数据持久化对象集合(字符型字段模糊匹配，其余字段精确匹配) -->
-	<select id="like" parameterType="Map" resultType="com.ims.system.model.User">
+	<select id="like" parameterType="Map" resultType="com.toonan.system.model.User">
 		SELECT
 			<include refid="Base_Column_List" />	
 		FROM sys_user
@@ -78,7 +78,7 @@
 	</select>
 
 	<!-- 根据Dto模糊查询并返回分页数据持久化对象集合(字符型字段模糊匹配，其余字段精确匹配) -->
-	<select id="likePage" parameterType="Map" resultType="com.ims.system.model.User" useCache="false">
+	<select id="likePage" parameterType="Map" resultType="com.toonan.system.model.User" useCache="false">
 	    SELECT
 			<include refid="Base_Column_List" />	
 		FROM sys_user
@@ -234,7 +234,7 @@
 		</if>
     </sql>
    <!-- 根据Dto对象分页查询 -->
-	<select id="listUserPage" parameterType="Map" resultType="com.ims.system.model.User">
+	<select id="listUserPage" parameterType="Map" resultType="com.toonan.system.model.User">
 		SELECT
 		<include refid="inner_Column_List" />,b.dept_name as deptName
 		FROM sys_user a  INNER JOIN sys_dept b
@@ -243,14 +243,12 @@
 		<if test="queryParam!= null and queryParam != ''">
 		      AND (a.account LIKE '%${queryParam}%' OR a.username LIKE '%${queryParam}%')<!-- 登陆账号或登陆名 -->
 		</if>
-		 <if test="queryWay != null and queryWay != ''">
-		   <if test="queryWay==1"> <!-- 查询待选用户列表 -->
-		       AND  NOT EXISTS (SELECT  1 FROM sys_role_user r WHERE r.user_id=a.user_id )
-		    </if>   
-		   <if test="queryWay==2"> <!-- 查询待选用户列表 -->
-		       AND   EXISTS (SELECT  1 FROM sys_role_user r WHERE r.user_id=a.user_id AND r.role_id=#{roleId})
-		    </if>   
+		 <if test="outRoleId != null and outRoleId != ''">
+		      AND  NOT EXISTS (SELECT  1 FROM sys_role_user r WHERE r.user_id=a.user_id AND r.role_id=#{outRoleId})
 		</if>
+		<if test="inRoleId != null and inRoleId != ''">
+		       AND   EXISTS (SELECT  1 FROM sys_role_user r WHERE r.user_id=a.user_id AND r.role_id=#{inRoleId})
+		 </if>   
 	    <if test="cascadeId != null and cascadeId != ''">
 		      AND b.cascade_id LIKE '${cascadeId}%'    <!-- 使用语义ID关联 -->
 		</if>
@@ -267,11 +265,11 @@
 	   <if test="status != null and status != ''">
 		      AND a.status = #{status}  <!-- 用户状态 1:有效2:停用 3:锁定 -->
 		</if>
-	    <if test="userType != null and userType != ''">
-		      AND a.user_type =#{userType}
+	    <if test="user_type != null and user_type != ''">
+		      AND a.user_type =#{user_type}
 		</if>
-	    <if test="deptId != null and deptId != ''">
-		      AND a.deptId=#{deptId}
+	    <if test="dept_id != null and dept_id != ''">
+		      AND a.dept_id=#{dept_id}
 		</if>
 	    <if test="mobile != null and mobile != ''">
 		      AND a.mobile LIKE '%${mobile}%'  <!-- 联系电话 -->
@@ -305,6 +303,12 @@
 	    <if test="careteTimeEnd!= null and careteTimeEnd != ''">
 		      AND a.create_time &lt;=TO_DATE(#{careteTimeEnd},'YYYY-MM-DD')
 		</if>
+		 <if test="level!= null and level!= ''">
+		 AND  a.${level}  in
+	    <foreach item="dataRange" collection="dataRangeList" open="(" separator="," close=")">  
+		    #{dataRange}  
+		</foreach> 
+	  </if>
 		</where>
 		<if test="_order != null and _order != ''">
 		     ORDER BY ${_order}

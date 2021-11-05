@@ -17,7 +17,7 @@
 							style="width: 250px; height: 30px" required="true"></td>
 						<td class="kv-label">上级机构：</td>
 						<td class="kv-content"><input  type="text"  name="parentId"  value="${parentId}"	class="easyui-combotree"
-							data-options="url:'${ctx }/system/dept/loadTree',method:'get'" required="true"
+							data-options="url:'${ctx }/system/dept/loadDeptTree',method:'get'" required="true"
 							style="width: 250px; height: 30px" ></td>
 					</tr>
 				  

@@ -3,7 +3,6 @@
 <head>
 <meta charset="UTF-8">
 <IMS:codeStore fields="edit_mode,status,dict_type" />
-<IMS:codeFormatter fields="edit_mode,status,dict_type" />
 <script type="text/javascript">
 	//单击列查询
 	function clickQueryDict(rowIndex, rowData) {
@@ -22,11 +21,8 @@
 	
   //清空字典回调函数
   function clearDictCallback(data){
-		if(data){
-			if(data.appcode){
-				$('#dictList').datagrid('loadData', { total: 0, rows: [] });//清空数据字典明细表
-			}
-		}
+	  $('#dictIndexList').datagrid({});
+	  $('#dictList').datagrid('loadData', { total: 0, rows: [] });//清空数据字典明细表
 		
 	}
   function editDict(){
@@ -36,7 +32,7 @@
 	 		 if(rowValue=='0'){
 	 			$.messager.alert('警告信息', '你当前选择字典对照数据为只读，只读数据不允许删除和修改', 'warning'); 
 	 		 }else{
-	 			editGridData('editDictWindow','dictList','dictId','${ctx}/system/dict/editDict','请选择你要编辑字典对照数据'); 
+	 			editGridData('${ctx}/system/dict/editDict','editDictWindow','dictList','dictId','请选择你要编辑字典对照数据'); 
 	 		 }
 	 		
 	 	 }else{
@@ -48,7 +44,7 @@
 </head>
 <body style="margin: 0; padding: 0">
 	<div class="easyui-layout" data-options="fit:true">
-		<div data-options="region:'west',split:false" style="width: 530px;">
+		<div data-options="region:'west',split:false" style="width: 600px;">
 			<div class="easyui-layout" data-options="fit:true">
 				<div style="height: 45px; background-color: white;"
 					data-options="region:'north',split:false">
@@ -57,7 +53,7 @@
 							<tr>
 								<td width="23%" style="text-align: right">字典标识/名称：</td>
 								<td width="20%" style="text-align: left"><input type="text"
-									name="queryParam" class="easyui-textbox" style="width: 100px;" /></td>
+									name="queryParam" class="easyui-textbox" style="width: 150px;" /></td>
 
 								<td width="15%" style="text-align: right">字典分类：</td>
 								<td width="22%" style="text-align: left"><input type="text"
@@ -100,7 +96,7 @@
 								<th field="dictIndexId" hidden="true">字典索引编号</th>
 								<th field="dictKey" width="40%" align="center">字典标识</th>
 								<th field="dictName" width="40%" align="center">字典名称</th>
-								<th field="dictType" formatter="dict_typeFormatter" width="20%" align="center">字典分类</th>
+								<th field="dictType_dict"  width="20%" align="center">字典分类</th>
 							</tr>
 						</thead>
 					</table>
@@ -119,11 +115,11 @@
 
 								<td width="23%" style="text-align: right">字典对照码：</td>
 								<td width="20%" style="text-align: left"><input type="text"
-									name="dictCode" class="easyui-textbox" style="width: 100px;" /></td>
+									name="dictCode" class="easyui-textbox" style="width: 120px;" /></td>
 
 								<td width="15%" style="text-align: right">字典对照值：</td>
 								<td width="22%" style="text-align: left"><input type="text"
-									name="dictValue" class="easyui-textbox" style="width: 100px;" /></td>
+									name="dictValue" class="easyui-textbox" style="width: 120px;" /></td>
 								</td>
 								<td width="15%" rowspan="4" algin="center">&nbsp;<a
 									href="javascript:void(0)" class="easyui-linkbutton"
@@ -156,11 +152,11 @@
 								<th data-options="field:'ck',checkbox:true"></th>
 								<th field="dictCode" width="20%" align="center">字典对照码</th>
 								<th field="dictValue" width="20%" align="center">字典对照值</th>
-								<th field="showColor" width="15%" align="center">显示颜色</th>
+								<!-- <th field="showColor" width="15%" align="center">显示颜色</th> -->
 								<th field="sortNo" width="11%" align="center">排序号</th>
-								<th field="status" formatter="statusFormatter" width="14%"
+								<th field="status_dict"  width="14%"
 									align="center">当前状态</th>
-								<th field="editMode" formatter="edit_modeFormatter" width="14%"
+								<th field="editMode_dict"  width="14%"
 									align="center">编辑模式</th>
 
 							</tr>
@@ -173,30 +169,38 @@
 
 	</div>
 	<div id="toolbar" style="padding: 2px;">
-
+         <shiro:hasPermission name="system:dict:add">
 		<a href="javascript:void(0);" class="easyui-linkbutton" iconCls="icon-add" plain="true"
 			onclick="showWindow('addDictIndexWindow','${ctx}/system/dict/addDictIndex');">新增</a>
+		</shiro:hasPermission>
+		 <shiro:hasPermission name="system:dict:edit">
 		<a href="javascript:void(0);" class="easyui-linkbutton"
 			iconCls="icon-edit" plain="true"
-			onclick="editGridData('editDictIndexWindow','dictIndexList','dictIndexId','${ctx}/system/dict/editDictIndex','请选择你要编辑的字典数据');">编辑</a>
+			onclick="editGridData('${ctx}/system/dict/editDictIndex','editDictIndexWindow','dictIndexList','dictIndexId','${ctx}/system/dict/editDictIndex','请选择你要编辑的字典数据');">编辑</a>
+		</shiro:hasPermission>
+		 <shiro:hasPermission name="system:dict:remove">
 		<a href="javascript:void(0);" class="easyui-linkbutton" iconCls="icon-remove"
-			plain="true" onclick="removeGridData('dictIndexList','dictIndexId','${ctx}/system/dict/removeDictIndex','请选择你要删除字典信息','你确认要删除选择的字典信息吗？','',clearDictCallback);">删除</a>
+			plain="true" onclick="removeGridData('${ctx}/system/dict/removeDictIndex','dictIndexList','dictIndexId','请选择你要删除字典信息','你确认要删除选择的字典信息吗？','',clearDictCallback);">删除</a>
+		</shiro:hasPermission>
+		 <shiro:hasPermission name="system:dict:refreshDict">
 		<a href="javascript:void(0);" class="easyui-linkbutton" iconCls="refresh"
 			plain="true" onclick="doAjax('${ctx}/system/dict/refreshDict','','你确定要重新刷新字典缓存吗？')">刷新缓存</a>
-		<a href="javascript:void(0);" class="easyui-linkbutton" iconCls="close"
-			plain="true" onclick="doAjax('${ctx}/system/dict/flushDict','','你确定清空字典缓存吗？')">清空缓存</a>
+	    </shiro:hasPermission>
 
 	</div>
 	<div id="tb" style="padding: 2px;">
-
+      <shiro:hasPermission name="system:dict:add">
 		<a href="javascript:void(0);" class="easyui-linkbutton" iconCls="icon-add" plain="true"
-			onclick="editGridData('addDictWindow','dictIndexList','dictIndexId','${ctx}/system/dict/addDict','请先在数据字典列表上选择一条字典数据');">新增</a>
-
+			onclick="editGridData('${ctx}/system/dict/addDict','addDictWindow','dictIndexList','dictIndexId','请先在数据字典列表上选择一条字典数据');">新增</a>
+      </shiro:hasPermission>
+      <shiro:hasPermission name="system:dict:edit">
 		<a href="javascript:void(0);" class="easyui-linkbutton"
 			iconCls="icon-edit" plain="true" onclick="editDict()">编辑</a>
+       </shiro:hasPermission>
+		 <shiro:hasPermission name="system:dict:remove">
 		<a href="javascript:void(0);" class="easyui-linkbutton" iconCls="icon-remove"
-			plain="true" onclick="batchRemoveGridData('dictList','dictId','${ctx}/system/dict/batchRemoveDict','请选择你要删除字典对照信息','你确认要删除选择的字典对照信息吗？');">删除</a>
-
+			plain="true" onclick="batchRemoveGridData('${ctx}/system/dict/batchRemoveDict','dictList','dictId','请选择你要删除字典对照信息','你确认要删除选择的字典对照信息吗？');">删除</a>
+          </shiro:hasPermission>
 	</div>
 	<div id="addDictIndexWindow" class="easyui-window" title="新增字典"
 		data-options="collapsible:false,shadow:false,minimizable:false,maximizable:false,modal:true,closed:true"

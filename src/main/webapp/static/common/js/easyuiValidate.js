@@ -103,9 +103,9 @@ $.extend(
 					// 用户账号验证(只能包括 _ 数字 字母)
 					loginname : {
 						validator : function(value) {
-							return /^[a-zA-Z0-9_]{2,19}$/i.test(value);
+							return /^[a-zA-Z0-9_@]{2,19}$/i.test(value);
 						},
-						message : '不合法（允许2-20字符，允许字母数字下划线）'
+						message : '不合法（允许2-20字符，允许字母数字下划线@）'
 					},
 					// 用户账号验证(只能包括 _ 数字 字母)
 					account : {

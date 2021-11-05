@@ -7,7 +7,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   <head>
     <base href="<%=basePath%>">
     
-    <title>欢迎登录后台管理系统</title>
+    <title>黄埔区出租屋电子档案系统</title>
 	<meta http-equiv="pragma" content="no-cache">
 	<meta http-equiv="cache-control" content="no-cache">
 	<meta http-equiv="expires" content="0">    
@@ -16,6 +16,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   </head>
   
   <body>
-    <script>window.location.href="<%=path%>/system/login/goLogin"</script>
+    <script>window.location.href="<%=path%>/login/index"</script>
   </body>
 </html>

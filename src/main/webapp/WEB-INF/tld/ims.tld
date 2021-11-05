@@ -10,7 +10,7 @@
 	<description>IMS标签库</description>
    <tag>
 		<name>codeStore</name>
-		<tagclass>com.ims.system.tag.CodeStoreTag</tagclass>
+		<tagclass>com.toonan.system.tag.CodeStoreTag</tagclass>
 		<bodycontent>empty</bodycontent>
 		<info>codeStore标签</info>
 		<attribute>
@@ -21,7 +21,7 @@
 	</tag>
    <tag>
 		<name>codeStoreFilter</name>
-		<tagclass>com.ims.system.tag.CodeStoreFilterTag</tagclass>
+		<tagclass>com.toonan.system.tag.CodeStoreFilterTag</tagclass>
 		<bodycontent>empty</bodycontent>
 		<info>codeStore标签</info>
 		<attribute>
@@ -42,7 +42,7 @@
 	</tag>
    <tag>
 		<name>codeFormatter</name>
-		<tagclass>com.ims.system.tag.CodeFormatterTag</tagclass>
+		<tagclass>com.toonan.system.tag.CodeFormatterTag</tagclass>
 		<bodycontent>empty</bodycontent>
 		<info>codeFormatter标签</info>
 		<attribute>
@@ -53,7 +53,7 @@
 	</tag>
    <tag>
 		<name>multiCodeFormatter</name>
-		<tagclass>com.ims.system.tag.MultiCodeFormatterTag</tagclass>
+		<tagclass>com.toonan.system.tag.MultiCodeFormatterTag</tagclass>
 		<bodycontent>empty</bodycontent>
 		<info>multiCodeFormatter多字典格式标签</info>
 		<attribute>
@@ -74,7 +74,7 @@
 	</tag>
    <tag>
 		<name>codeOut</name>
-		<tagclass>com.ims.system.tag.CodeOutTag</tagclass>
+		<tagclass>com.toonan.system.tag.CodeOutTag</tagclass>
 		<bodycontent>empty</bodycontent>
 		<info>codeOut标签</info>
 		<attribute>
@@ -95,7 +95,7 @@
 	</tag>
    <tag>
 		<name>paramOut</name>
-		<tagclass>com.ims.system.tag.ParamOutTag</tagclass>
+		<tagclass>com.toonan.system.tag.ParamOutTag</tagclass>
 		<bodycontent>empty</bodycontent>
 		<info>paramOut标签</info>
 		<attribute>

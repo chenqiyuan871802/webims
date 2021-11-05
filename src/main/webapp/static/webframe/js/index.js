@@ -317,6 +317,8 @@
                         $.each(childNodes, function (i) {
                             var subrow = childNodes[i];
                             var subchildNodes = $.learunindex.jsonWhere(data, function (v) { return v.parentId == subrow.menuId});
+                             var url=subrow.url;
+                             var urlToken=webplus.getUrlToken(url);
                             _html += '<li>';
                             if (subchildNodes.length > 0) {
                                 _html += '<a href="#"><i class="' + subrow.iconName + '"></i>' + subrow.menuName + '';
@@ -324,12 +326,12 @@
                                 _html += '<ul class="treeview-menu">';
                                 $.each(subchildNodes, function (i) {
                                     var subchildNodesrow = subchildNodes[i];
-                                    _html += '<li><a class="menuItem" data-id="' + subrow.menuId+ '" href="' +ctx+'/' + subrow.url + '"><i class="' + subchildNodesrow.iconName + '"></i>' + subchildNodesrow.menuName + '</a></li>';
+                                    _html += '<li><a class="menuItem" data-id="' + subrow.menuId+ '" href="' +ctx+'/' + urlToken + '"><i class="' + subchildNodesrow.iconName + '"></i>' + subchildNodesrow.menuName + '</a></li>';
                                 });
                                 _html += '</ul>';
 
                             } else {
-                                _html += '<a class="menuItem" data-id="' + subrow.menuId+ '" href="' +ctx+'/'+ subrow.url + '"><i class="' + subrow.iconName + '"></i>' + subrow.menuName + '</a>';
+                                _html += '<a class="menuItem" data-id="' + subrow.menuId+ '" href="' +ctx+'/'+ urlToken + '"><i class="' + subrow.iconName + '"></i>' + subrow.menuName + '</a>';
                             }
                             _html += '</li>';
                         });
