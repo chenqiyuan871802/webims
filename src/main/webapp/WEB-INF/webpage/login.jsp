@@ -21,7 +21,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <script type="text/javascript" src="${ctx}/static/weblib/easyui/jquery.min.js"></script>
 <script type="text/javascript" src="${ctx}/static/weblib/easyui/jquery.easyui.min.js"></script>
 <script type="text/javascript" src="${ctx}/static/weblib/easyui/easyui-lang-zh_CN.js"></script>
-<script type="text/javascript" src="${ctx}/static/common/js/webims.js"></script>
+<script type="text/javascript" src="${ctx}/static/common/js/webplus.js"></script>
 <script language="javascript">
 	$(function(){
     $('.loginbox').css({'position':'absolute','left':($(window).width()-692)/2});
