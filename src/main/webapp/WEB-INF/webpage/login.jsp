@@ -22,43 +22,67 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <script type="text/javascript" src="${ctx}/static/weblib/easyui/jquery.easyui.min.js"></script>
 <script type="text/javascript" src="${ctx}/static/weblib/easyui/easyui-lang-zh_CN.js"></script>
 <script type="text/javascript" src="${ctx}/static/common/js/webplus.js"></script>
+<script type="text/javascript" src="${ctx}/static/common/js/md5.js"></script>
 <script language="javascript">
-	$(function(){
-    $('.loginbox').css({'position':'absolute','left':($(window).width()-692)/2});
-	$(window).resize(function(){  
-    $('.loginbox').css({'position':'absolute','left':($(window).width()-692)/2});
-    })  
-});  
-	function login() {
-	    var account=$("#account").val();
-	    var password=$("#password").val();
-		if(account==""){
-			
-			 $.messager.alert('警告信息','用户账号不能为空，请输入', 'warning');
-			 return ;
-		}
-		if(password==""){
-			
-			 $.messager.alert('警告信息','用户密码不能为空，请输入', 'warning');
-			 return ;
-		}
-		
-		 var paramData = {};
-		 paramData.account=account;
-		 paramData.password=password;
-		 doAjax('${ctx}/system/login/doLogin',paramData,'','',function(data){
-			 if (data.appcode == "1") {
-				 window.location.href = '${ctx}/system/main/initMain';
-			 }
-		 })
-		 
+$(function () {
+	webplus.setName('ctx', '${ctx}')
+	$('.loginbox').css({ 'position': 'absolute', 'left': ($(window).width() - 692) / 2 });
+	$(window).resize(function () {
+		$('.loginbox').css({ 'position': 'absolute', 'left': ($(window).width() - 692) / 2 });
+
+	})
+	var accessToken = '${accessToken}';
+	if (!webplus.isEmpty(accessToken)) {
+		thirdLogin(accessToken);
 	}
-   function enterSumbit(){
-      if(event.keyCode == 13){
-         login();
-       }
-   
-  }
+});
+
+function thirdLogin(accessToken) {
+	var params = {};
+	params.accessToken = accessToken;
+	doAjax('${ctx}/thirdLogin', params, '', '', '', function (data) {
+		if (data.appCode == "1") {
+			webplus.setToken(data.token);
+			webplus.setName("account", data.userToken.account);
+			$("#token").val(data.userToken.token);
+			document.getElementById("toMainForm").submit();
+		}
+	});
+
+}
+function login() {
+	var account = $("#account").val();
+	var password = $("#password").val();
+	if (account == "") {
+
+		$.messager.alert('警告信息', '用户账号不能为空，请输入', 'warning');
+		return;
+	}
+	if (password == "") {
+
+		$.messager.alert('警告信息', '用户密码不能为空，请输入', 'warning');
+		return;
+	}
+
+	var paramData = {};
+	paramData.account = account;
+	paramData.password = hex_md5(password);
+	doAjax('${ctx}/doLogin', paramData, '', '', '', function (data) {
+		if (data.appCode == "1") {
+			webplus.setToken(data.token);
+			webplus.setName("account", data.user.account);
+			$("#token").val(data.token);
+			document.getElementById("toMainForm").submit();
+		}
+	})
+
+}
+function enterSumbit() {
+	if (event.keyCode == 13) {
+		login();
+	}
+
+}
 
 </script> 
 
@@ -95,7 +119,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     </div>
     
     </div>
-    
+    <form id="toMainForm" class="loginForm" action="${ctx}/system/main/initMain" method="post">
+					<input id="token" name="token" type="hidden" />
+
+				</form>
 </body>
 
 </html>
